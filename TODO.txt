@@ -1,1 +1,21 @@
-679
+3048
+
+
+convert.exe
+abonim ditor
+abonim disa mujor
+si llogaritet incomi
+nese expired te dali i kuq te lisat
+
+
+
+
+
+
+
+
+check_date
+update_income_report
+create_gym_membership_frame - lloji i anetaresimi duhet edhe disa muaj
+
+
