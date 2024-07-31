@@ -85,8 +85,8 @@ def check_date():
             conn.commit()
 
             # Send SMS to the member
-            sms_message="Your gym membership has expired. Renew your subscription to continue accessing D'GRIT GYM."
-            send_sms_notification(contact_no, sms_message)
+            #sms_message="Your gym membership has expired. Renew your subscription to continue accessing D'GRIT GYM."
+            #send_sms_notification(contact_no, sms_message)
 
 
 # create a function that sends sms for 3 days before expiration
@@ -107,7 +107,7 @@ def send_sms_for_expiration():
 
         # Check if the end_date is 3 days from the current date
         if datetime.strptime(end_date, '%Y-%m-%d') == current_date + timedelta(days=3):
-            print("3 days before expiration")
+            print("3 dite te ngelura")
             # Send SMS to the member
             sms_message="Your gym membership will expire in 3 days. Renew your subscription to continue accessing D'GRIT GYM."
             send_sms_notification(contact_no, sms_message)
@@ -119,7 +119,7 @@ class MainApp(ctk.CTk):
         super().__init__()
 
         # Fixed size of the window, and cannot be resized
-        self.resizable(False, False)
+        self.resizable(True, True)
         self.title("D'Grit Gym")
         self.geometry("1240x600")
 
@@ -187,7 +187,7 @@ class MainApp(ctk.CTk):
 
         self.home_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Home",
+            text="Faqja Kryesore",
             fg_color="transparent", text_color=("gray10", "gray90"),
             hover_color=("gray70", "gray30"),
             image=self.home_image, anchor="w", command=self.home_button_event)
@@ -195,72 +195,72 @@ class MainApp(ctk.CTk):
 
         self.frame_2_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Membership",
+            text="Abonimet",
             fg_color="transparent", text_color=("gray10", "gray90"),
             hover_color=("gray70", "gray30"),
             image=self.add_user_image, anchor="w", command=self.frame_2_button_event)
         self.frame_2_button.grid(row=2, column=0, sticky="ew")
 
-        self.frame_3_button=ctk.CTkButton(
-            self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Take Attendance",
-            fg_color="transparent", text_color=("gray10", "gray90"),
-            hover_color=("gray70", "gray30"),
-            image=self.attendance_image, anchor="w", command=self.frame_3_button_event)
-        self.frame_3_button.grid(row=3, column=0, sticky="ew")
+        #self.frame_3_button=ctk.CTkButton(
+        #    self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
+        #    text="Take Attendance",
+        #    fg_color="transparent", text_color=("gray10", "gray90"),
+        #    hover_color=("gray70", "gray30"),
+        #    image=self.attendance_image, anchor="w", command=self.frame_3_button_event)
+        #self.frame_3_button.grid(row=3, column=0, sticky="ew")
 
         self.frame_4_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Gym Equipment",
+            text="Pajisjet",
             fg_color="transparent", text_color=("gray10", "gray90"),
             hover_color=("gray70", "gray30"),
             image=self.add_equipment_image, anchor="w", command=self.frame_4_button_event)
-        self.frame_4_button.grid(row=4, column=0, sticky="ew")
+        self.frame_4_button.grid(row=3, column=0, sticky="ew")
 
         self.frame_5_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Trainers",
+            text="Traineret",
             fg_color="transparent", text_color=("gray10", "gray90"),
             hover_color=("gray70", "gray30"),
             image=self.trainer_image, anchor="w", command=self.frame_5_button_event)
-        self.frame_5_button.grid(row=5, column=0, sticky="ew")
+        self.frame_5_button.grid(row=4, column=0, sticky="ew")
 
-        self.frame_6_button=ctk.CTkButton(
-            self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Gymers",
-            fg_color="transparent", text_color=("gray10", "gray90"),
-            hover_color=("gray70", "gray30"),
-            image=self.visitor_image, anchor="w", command=self.frame_6_button_event)
-        self.frame_6_button.grid(row=6, column=0, sticky="ew")
+        #self.frame_6_button=ctk.CTkButton(
+        #    self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
+        #    text="Gymers",
+        #    fg_color="transparent", text_color=("gray10", "gray90"),
+        #    hover_color=("gray70", "gray30"),
+        #    image=self.visitor_image, anchor="w", command=self.frame_6_button_event)
+        #self.frame_6_button.grid(row=6, column=0, sticky="ew")
 
         self.frame_7_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Employees",
+            text="Punonjesit",
             fg_color="transparent", text_color=("gray10", "gray90"),
             hover_color=("gray70", "gray30"),
             image=self.employee_image, anchor="w", command=self.frame_7_button_event)
-        self.frame_7_button.grid(row=7, column=0, sticky="ew")
+        self.frame_7_button.grid(row=5, column=0, sticky="ew")
 
         self.frame_8_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
-            text="Create User Account",
+            text="Krijo Adrese",
             fg_color="transparent", text_color=("gray10", "gray90"),
             hover_color=("gray70", "gray30"),
             image=self.add_user_image, anchor="w", command=self.frame_8_button_event)
-        self.frame_8_button.grid(row=8, column=0, sticky="ew")
+        self.frame_8_button.grid(row=6, column=0, sticky="ew")
 
         self.appearance_mode_menu=ctk.CTkOptionMenu(
             self.navigation_frame, values=["Dark", "Light"],
             command=change_appearance_mode_event)
-        self.appearance_mode_menu.grid(row=10, column=0, padx=20, pady=10, sticky="s")
+        self.appearance_mode_menu.grid(row=8, column=0, padx=20, pady=10, sticky="s")
 
         self.logout_button=ctk.CTkButton(
             self.navigation_frame,
-            text="Logout",
+            text="Dilni",
             fg_color="Red", text_color=("gray10", "gray90"),
             hover_color=("red3", "red4"),
             command=self.logout)
-        self.logout_button.grid(row=11, column=0, padx=20, pady=5, sticky="ew")
+        self.logout_button.grid(row=9, column=0, padx=20, pady=5, sticky="ew")
 
         # create home frame
         self.home_frame=ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
@@ -299,10 +299,10 @@ class MainApp(ctk.CTk):
         # set button color for selected button
         self.home_button.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
         self.frame_2_button.configure(fg_color=("gray75", "gray25") if name == "frame_2" else "transparent")
-        self.frame_3_button.configure(fg_color=("gray75", "gray25") if name == "frame_3" else "transparent")
+        #self.frame_3_button.configure(fg_color=("gray75", "gray25") if name == "frame_3" else "transparent")
         self.frame_4_button.configure(fg_color=("gray75", "gray25") if name == "frame_4" else "transparent")
         self.frame_5_button.configure(fg_color=("gray75", "gray25") if name == "frame_5" else "transparent")
-        self.frame_6_button.configure(fg_color=("gray75", "gray25") if name == "frame_6" else "transparent")
+        #self.frame_6_button.configure(fg_color=("gray75", "gray25") if name == "frame_6" else "transparent")
         self.frame_7_button.configure(fg_color=("gray75", "gray25") if name == "frame_7" else "transparent")
         self.frame_8_button.configure(fg_color=("gray75", "gray25") if name == "frame_8" else "transparent")
 
@@ -346,8 +346,8 @@ class MainApp(ctk.CTk):
     def frame_2_button_event(self):
         self.select_frame_by_name("frame_2")
 
-    def frame_3_button_event(self):
-        self.select_frame_by_name("frame_3")
+    #def frame_3_button_event(self):
+    #    self.select_frame_by_name("frame_3")
 
     def frame_4_button_event(self):
         self.select_frame_by_name("frame_4")
@@ -355,8 +355,8 @@ class MainApp(ctk.CTk):
     def frame_5_button_event(self):
         self.select_frame_by_name("frame_5")
 
-    def frame_6_button_event(self):
-        self.select_frame_by_name("frame_6")
+    #def frame_6_button_event(self):
+    #    self.select_frame_by_name("frame_6")
 
     def frame_7_button_event(self):
         self.select_frame_by_name("frame_7")
@@ -384,7 +384,7 @@ def create_home_frame(home):
     label_frame.pack(pady=5, padx=10, fill="both", expand=True)
 
     # dashboard label align left
-    dashboard_label=ctk.CTkLabel(label_frame, text="Dashboard | Overview", font=("Arial bold", 30))
+    dashboard_label=ctk.CTkLabel(label_frame, text="Dashboard", font=("Arial bold", 30))
     dashboard_label.pack(pady=5, padx=10, side=tk.LEFT)
 
     # Display the current time on the left side of the dashboard label
@@ -410,7 +410,7 @@ def create_home_frame(home):
     member_panel_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
     # create a small rectangular label to display the no. of members
-    members_label=ctk.CTkLabel(member_panel_frame, text="Members", font=("Arial bold", 14))
+    members_label=ctk.CTkLabel(member_panel_frame, text="Anetaret", font=("Arial bold", 14))
     members_label.pack(pady=5, padx=60, anchor="w")
 
     # create a counter label to display the no. of members
@@ -430,36 +430,36 @@ def create_home_frame(home):
     get_members_count()
 
     # visitor panel frame
-    visitors_panel_frame=ctk.CTkFrame(panel_frame, fg_color="#434343")
-    visitors_panel_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+    #visitors_panel_frame=ctk.CTkFrame(panel_frame, fg_color="#434343")
+    #visitors_panel_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
     # create a small rectangular label to display the no. of members
-    visitors_label=ctk.CTkLabel(visitors_panel_frame, text="Gymers", font=("Arial bold", 14))
-    visitors_label.pack(pady=5, padx=65, anchor="w")
+    #visitors_label=ctk.CTkLabel(visitors_panel_frame, text="Gymers", font=("Arial bold", 14))
+    #visitors_label.pack(pady=5, padx=65, anchor="w")
 
     # create a counter label to display the no. of members
-    visitor_counter_label=ctk.CTkLabel(visitors_panel_frame, text="", font=("Arial bold", 50))
-    visitor_counter_label.pack(pady=10, padx=10, anchor="center")
+    #visitor_counter_label=ctk.CTkLabel(visitors_panel_frame, text="", font=("Arial bold", 50))
+    #visitor_counter_label.pack(pady=10, padx=10, anchor="center")
 
-    def get_visitors_count():
+    #def get_visitors_count():
         # get the no. of members from the database
-        conn=sqlite3.connect('SQLite db/visitors_log.db')
-        cursor=conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM visitors")
-        visitors_count=cursor.fetchone()[0]
-        visitor_counter_label.configure(text=visitors_count)
-        conn.close()
-        home.after(1000, get_visitors_count)
+    #    conn=sqlite3.connect('SQLite db/visitors_log.db')
+    #    cursor=conn.cursor()
+    #    cursor.execute("SELECT COUNT(*) FROM visitors")
+    #    visitors_count=cursor.fetchone()[0]
+    #    visitor_counter_label.configure(text=visitors_count)
+    #    conn.close()
+    #    home.after(1000, get_visitors_count)
 
-    get_visitors_count()
+    #get_visitors_count()
 
     # employee panel frame
     employee_panel_frame=ctk.CTkFrame(panel_frame, fg_color="#434343")
-    employee_panel_frame.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
+    employee_panel_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
     # create a small rectangular label to display the no. of employees
-    employee_label=ctk.CTkLabel(employee_panel_frame, text="Employees", font=("Arial bold", 14))
-    employee_label.pack(pady=5, padx=50, anchor="w")
+    employee_label=ctk.CTkLabel(employee_panel_frame, text="Punonjesit", font=("Arial bold", 14))
+    employee_label.pack(pady=5, padx=65, anchor="w")
 
     # create a counter label to display the no. of employees
     employee_counter_label=ctk.CTkLabel(employee_panel_frame, text="", font=("Arial bold", 50))
@@ -479,11 +479,11 @@ def create_home_frame(home):
 
     # trainer panel frame
     trainer_panel_frame=ctk.CTkFrame(panel_frame, fg_color="#434343")
-    trainer_panel_frame.grid(row=0, column=3, padx=10, pady=10, sticky="nsew")
+    trainer_panel_frame.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
     # create a small rectangular label to display the no. of trainers
-    trainer_label=ctk.CTkLabel(trainer_panel_frame, text="Trainers", font=("Arial bold", 14))
-    trainer_label.pack(pady=5, padx=60, anchor="w")
+    trainer_label=ctk.CTkLabel(trainer_panel_frame, text="Traineret", font=("Arial bold", 14))
+    trainer_label.pack(pady=5, padx=50, anchor="w")
 
     # create a counter label to display the no. of trainers
     trainer_counter_label=ctk.CTkLabel(trainer_panel_frame, text="", font=("Arial bold", 50))
@@ -503,11 +503,11 @@ def create_home_frame(home):
 
     # gym equipment panel frame
     gym_equipment_panel_frame=ctk.CTkFrame(panel_frame, fg_color="#434343")
-    gym_equipment_panel_frame.grid(row=0, column=4, padx=10, pady=10, sticky="nsew")
+    gym_equipment_panel_frame.grid(row=0, column=3, padx=10, pady=10, sticky="nsew")
 
     # create a small rectangular label to display the no. of gym equipment
-    gym_equipment_label=ctk.CTkLabel(gym_equipment_panel_frame, text="Gym Equipment", font=("Arial bold", 14))
-    gym_equipment_label.pack(pady=5, padx=30, anchor="w")
+    gym_equipment_label=ctk.CTkLabel(gym_equipment_panel_frame, text="Pajisjet", font=("Arial bold", 14))
+    gym_equipment_label.pack(pady=5, padx=60, anchor="w")
 
     # create a counter label to display the no. of gym equipment
     gym_equipment_counter_label=ctk.CTkLabel(gym_equipment_panel_frame, text="", font=("Arial bold", 50))
@@ -534,7 +534,7 @@ def create_home_frame(home):
     income_frame.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
     # Create a small rectangular label for the income report
-    income_label=ctk.CTkLabel(income_frame, text="Membership Monthly Income (PHP)", font=("Arial bold", 16))
+    income_label=ctk.CTkLabel(income_frame, text="Te ardhurat mujore nga anetarsimi (ALL)", font=("Arial bold", 16))
     income_label.pack(pady=5, padx=10, anchor="w")
 
     # Create a figure and axis for the income report graph
@@ -554,22 +554,22 @@ def create_home_frame(home):
     panel_frame.grid_rowconfigure(0, weight=1)
 
     # ------------FRAME 2----------------------#
-    graph_frame2=ctk.CTkFrame(graph_frame)
-    graph_frame2.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+    #graph_frame2=ctk.CTkFrame(graph_frame)
+    #graph_frame2.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
     # Create a small rectangular label for the income report
-    income_label2=ctk.CTkLabel(graph_frame2, text="Gymers Monthly Income (PHP)", font=("Arial bold", 16))
-    income_label2.pack(pady=5, padx=10, anchor="w")
+    #income_label2=ctk.CTkLabel(graph_frame2, text="Gymers Monthly Income (PHP)", font=("Arial bold", 16))
+    #income_label2.pack(pady=5, padx=10, anchor="w")
 
     # Create a figure and axis for the income report graph
-    fig, ax=plt.subplots(figsize=(7, 4), dpi=100)
-    canvas=FigureCanvasTkAgg(fig, master=graph_frame2)
-    canvas_widget=canvas.get_tk_widget()
-    canvas_widget.pack(fill="both", expand=True)
+    #fig, ax=plt.subplots(figsize=(7, 4), dpi=100)
+    #canvas=FigureCanvasTkAgg(fig, master=graph_frame2)
+    #canvas_widget=canvas.get_tk_widget()
+    #canvas_widget.pack(fill="both", expand=True)
 
     # Update the income report graph
-    update_visitors_income_report(home, ax, canvas)
-    canvas.draw()
+    #update_visitors_income_report(home, ax, canvas)
+    #canvas.draw()
 
 
 # Graph
@@ -601,12 +601,12 @@ def update_income_report(root, ax, canvas):
 
     # Plot the monthly income report with inverted colors
     ax.clear()
-    members_bar=ax.bar(months_array, member_incomes, color='green', alpha=0.7, label='Members')
-    ax.set_ylabel('Income (PHP)')
+    members_bar=ax.bar(months_array, member_incomes, color='green', alpha=0.7, label='Anetaret')
+    ax.set_ylabel('Te ardhurat (ALL)')
 
     # Update the title based on the current month
     ax.set_title(
-        f'Monthly Income Report ({calendar.month_name[int(current_month.split("-")[1])]} {current_month.split("-")[0]})')
+        f'Te ardhurat mujore ({calendar.month_name[int(current_month.split("-")[1])]} {current_month.split("-")[0]})')
 
     # Show legend
     ax.legend()
@@ -614,7 +614,7 @@ def update_income_report(root, ax, canvas):
     # Annotate each bar with the total income value
     for bar, members_income in zip(members_bar, member_incomes):
         ax.text(bar.get_x() + bar.get_width() / 2, members_income,
-                f'{members_income} PHP', ha='center', va='bottom', color='black', fontweight='bold')
+                f'{members_income} All', ha='center', va='bottom', color='black', fontweight='bold')
 
     ax.grid(True)
 
@@ -707,7 +707,7 @@ def create_gym_membership_frame(frame_2):
     # Create the buttons with the resized images
     register_member_button=ctk.CTkButton(
         master=frame_2,
-        text="Register Members",
+        text="Regjistro anetar",
         image=ImageTk.PhotoImage(register_image),
         compound=tk.TOP,
         command=register_member,  # Call the function to open the frame
@@ -720,7 +720,7 @@ def create_gym_membership_frame(frame_2):
 
     view_member_button=ctk.CTkButton(
         master=frame_2,
-        text="View Members",
+        text="Shiko anetaret",
         image=ImageTk.PhotoImage(view_image),
         compound=tk.TOP,
         command=view_member,
@@ -742,7 +742,7 @@ class RegistrationFrame(ctk.CTkFrame):
 
         # STEP 1: PERSONAL INFORMATION
         # Define and configure widgets within the frame
-        label=ctk.CTkLabel(self, text="D'Grit Gym Membership Registration", font=("Arial bold", 26))
+        label=ctk.CTkLabel(self, text="Regjistrimi i nje anetari te ri", font=("Arial bold", 26))
         label.pack(pady=20, padx=10)
 
         # outer frame
@@ -763,55 +763,55 @@ class RegistrationFrame(ctk.CTkFrame):
         label_font=ctk.CTkFont(family="Arial bold", size=16)  # Adjust the size as
 
         # Name
-        first_name_label=ctk.CTkLabel(personal_info_frame, text="First Name:", font=label_font)
+        first_name_label=ctk.CTkLabel(personal_info_frame, text="Emri:", font=label_font)
         first_name_label.grid(row=2, column=0, padx=20, pady=5, sticky="w")
-        self.first_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your first name")
+        self.first_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Emri")
         self.first_name_entry.grid(row=2, column=1, padx=20, pady=5)
 
-        middle_name_label=ctk.CTkLabel(personal_info_frame, text="Middle Name:", font=label_font)
-        middle_name_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
-        self.middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
-        self.middle_name_entry.grid(row=3, column=1, padx=20, pady=5)
+        #middle_name_label=ctk.CTkLabel(personal_info_frame, text="Middle Name:", font=label_font)
+        #middle_name_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
+        #self.middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
+        #self.middle_name_entry.grid(row=3, column=1, padx=20, pady=5)
 
-        last_name_label=ctk.CTkLabel(personal_info_frame, text="Last Name:", font=label_font)
-        last_name_label.grid(row=4, column=0, padx=20, pady=5, sticky="w")
-        self.last_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your last name")
-        self.last_name_entry.grid(row=4, column=1, padx=20, pady=5)
+        last_name_label=ctk.CTkLabel(personal_info_frame, text="Mbiemri:", font=label_font)
+        last_name_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
+        self.last_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Mbiemri")
+        self.last_name_entry.grid(row=3, column=1, padx=20, pady=5)
 
         # If data is provided, populate the entry fields
         if data:
             self.first_name_entry.insert(0, data[0])  # First Name
-            self.middle_name_entry.insert(0, data[1])  # Middle Name
+            #self.middle_name_entry.insert(0, data[1])  # Middle Name
             self.last_name_entry.insert(0, data[2])  # Last Name
 
         # Age
-        age_label=ctk.CTkLabel(personal_info_frame, text="Age:", font=label_font)
-        age_label.grid(row=6, column=0, padx=20, pady=5, sticky="w")
-        age_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your age")
-        age_entry.grid(row=6, column=1, padx=20, pady=5)
+        age_label=ctk.CTkLabel(personal_info_frame, text="Mosha:", font=label_font)
+        age_label.grid(row=4, column=0, padx=20, pady=5, sticky="w")
+        age_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Mosha")
+        age_entry.grid(row=4, column=1, padx=20, pady=5)
 
         # Sex
-        sex_label=ctk.CTkLabel(personal_info_frame, text="Sex:", font=label_font)
-        sex_label.grid(row=7, column=0, padx=20, pady=5, sticky="w")
-        sex_entry=ctk.CTkComboBox(personal_info_frame, values=["Male", "Female", "Other"])
-        sex_entry.grid(row=7, column=1, padx=20, pady=5)
+        sex_label=ctk.CTkLabel(personal_info_frame, text="Gjinia:", font=label_font)
+        sex_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
+        sex_entry=ctk.CTkComboBox(personal_info_frame, values=["Mashkull", "Femer"])
+        sex_entry.grid(row=5, column=1, padx=20, pady=5)
 
         # Create a DateEntry widget for the birthdate
-        birth_date_label=ctk.CTkLabel(personal_info_frame, text="Date of Birth:", font=label_font)
-        birth_date_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
+        #birth_date_label=ctk.CTkLabel(personal_info_frame, text="Date of Birth:", font=label_font)
+        #birth_date_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
 
         # Use the existing birth_date_entry you created
-        self.birth_date_entry=DateEntry(personal_info_frame, width=20, date_pattern="yyyy-mm-dd")
-        self.birth_date_entry.grid(row=5, column=1, padx=20, pady=15, sticky="w")
+        #self.birth_date_entry=DateEntry(personal_info_frame, width=20, date_pattern="yyyy-mm-dd")
+        #self.birth_date_entry.grid(row=5, column=1, padx=20, pady=15, sticky="w")
 
         # Bind the function to the <<DateEntrySelected>> event
-        self.birth_date_entry.bind("<<DateEntrySelected>>", self.calculate_age)
+        #self.birth_date_entry.bind("<<DateEntrySelected>>", self.calculate_age)
 
         # Address
-        address_label=ctk.CTkLabel(personal_info_frame, text="Address:", font=label_font)
-        address_label.grid(row=8, column=0, padx=20, pady=5, sticky="w")
-        address_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your address")
-        address_entry.grid(row=8, column=1, padx=20, pady=5)
+        #address_label=ctk.CTkLabel(personal_info_frame, text="Address:", font=label_font)
+        #address_label.grid(row=8, column=0, padx=20, pady=5, sticky="w")
+        #address_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your address")
+        #address_entry.grid(row=8, column=1, padx=20, pady=5)
 
         second_frame=ctk.CTkFrame(widget_frames)
         second_frame.grid(row=0, column=1, padx=10, pady=10)
@@ -822,34 +822,34 @@ class RegistrationFrame(ctk.CTkFrame):
         label_font=ctk.CTkFont(family="Arial bold", size=16)  # Adjust the size as
 
         # Assuming you have a list of nationalities
-        nationalities_list=["Select Nationality", "Filipino", "American", "Chinese", "Japanese", "Korean", "Other"]
+        #nationalities_list=["Select Nationality", "Filipino", "American", "Chinese", "Japanese", "Korean", "Other"]
 
         # Nationality Label
-        nationality_label=ctk.CTkLabel(contact_frame, text="Nationality:", font=label_font)
-        nationality_label.pack(pady=5, padx=10, anchor="w")
+        #nationality_label=ctk.CTkLabel(contact_frame, text="Nationality:", font=label_font)
+        #nationality_label.pack(pady=5, padx=10, anchor="w")
 
         # Create a CTkComboBox widget for nationalities
-        nationality_combo=ctk.CTkComboBox(contact_frame, values=nationalities_list)
-        nationality_combo.pack(pady=5, padx=10, fill="x")
-        nationality_combo.set("Select Nationality")  # Set a default selection
+        #nationality_combo=ctk.CTkComboBox(contact_frame, values=nationalities_list)
+        #nationality_combo.pack(pady=5, padx=10, fill="x")
+        #nationality_combo.set("Select Nationality")  # Set a default selection
 
         # Contact No
-        contact_no_label=ctk.CTkLabel(contact_frame, text="Contact No:", font=label_font)
+        contact_no_label=ctk.CTkLabel(contact_frame, text="Numri i kontaktit:", font=label_font)
         contact_no_label.pack(pady=3, padx=10, anchor="w")
-        contact_no_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
+        contact_no_entry=ctk.CTkEntry(contact_frame, placeholder_text="06--------")
         contact_no_entry.pack(pady=0, padx=10, fill="x")
 
         # Email Address
-        email_label=ctk.CTkLabel(contact_frame, text="Email Address:", font=label_font)
-        email_label.pack(pady=0, padx=10, anchor="w")
-        email_entry=ctk.CTkEntry(contact_frame, placeholder_text="example@gmail.com")
-        email_entry.pack(pady=0, padx=10, fill="x")
+        #email_label=ctk.CTkLabel(contact_frame, text="Email Address:", font=label_font)
+        #email_label.pack(pady=0, padx=10, anchor="w")
+        #email_entry=ctk.CTkEntry(contact_frame, placeholder_text="example@gmail.com")
+        #email_entry.pack(pady=0, padx=10, fill="x")
 
         # Emergency Contact No
-        emergency_contact_label=ctk.CTkLabel(contact_frame, text="Emergency Contact No:", font=label_font)
-        emergency_contact_label.pack(pady=0, padx=10, anchor="w")
-        emergency_contact_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
-        emergency_contact_entry.pack(pady=10, padx=10, fill="x")
+        #emergency_contact_label=ctk.CTkLabel(contact_frame, text="Emergency Contact No:", font=label_font)
+        #emergency_contact_label.pack(pady=0, padx=10, anchor="w")
+        #emergency_contact_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
+        #emergency_contact_entry.pack(pady=10, padx=10, fill="x")
 
         # Create a frame to hold the form fields
         third_frame=ctk.CTkFrame(widget_frames)
@@ -861,7 +861,7 @@ class RegistrationFrame(ctk.CTkFrame):
         label_font=ctk.CTkFont(family="Arial bold", size=16)  # Adjust the size as needed
 
         # Subscription ID
-        subscription_id_label=ctk.CTkLabel(subscription_frame, text="Subscription ID:", font=label_font)
+        subscription_id_label=ctk.CTkLabel(subscription_frame, text="Anetaresim ID:", font=label_font)
         subscription_id_label.grid(row=1, column=0, padx=20, pady=15, sticky="w")
 
         # Subscription ID entry (read-only)
@@ -874,14 +874,14 @@ class RegistrationFrame(ctk.CTkFrame):
         self.set_subscription_id()
 
         # Create the widgets for subscription plan, start date, and end date
-        subscription_plan_label=ctk.CTkLabel(subscription_frame, text="Subscription Plan:", font=label_font)
+        subscription_plan_label=ctk.CTkLabel(subscription_frame, text="Lloji i anetaresimit:", font=label_font)
         subscription_plan_label.grid(row=2, column=0, padx=20, pady=10, sticky="w")
 
-        subscription_plan_options=["Weekly", "Monthly", "Yearly"]
+        subscription_plan_options=["Javor", "Mujor", "Vjetor"]
         self.subscription_plan_entry=ctk.CTkComboBox(subscription_frame, values=subscription_plan_options)
 
         # Set "Monthly" as the default value
-        self.subscription_plan_entry.set("Monthly")
+        self.subscription_plan_entry.set("Mujor")
 
         self.subscription_plan_entry.grid(row=2, column=1, padx=20, pady=15)
 
@@ -889,7 +889,7 @@ class RegistrationFrame(ctk.CTkFrame):
         self.subscription_plan_entry.bind("<<ComboboxSelected>>", self.update_dates_on_subscription_change)
 
         # Button to trigger photo upload
-        upload_button=ctk.CTkButton(subscription_frame, text="Upload Photo", command=self.upload_photo)
+        upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
         upload_button.grid(row=3, column=0, padx=20, pady=10, sticky="w")
 
         # Uploaded photo entry
@@ -897,13 +897,13 @@ class RegistrationFrame(ctk.CTkFrame):
         self.uploaded_photo_entry.grid(row=3, column=1, padx=20, pady=10)
 
         # Reference to the user who owns the subscription
-        user_reference_label=ctk.CTkLabel(subscription_frame, text="User Reference:", font=label_font)
-        user_reference_label.grid(row=5, column=0, padx=20, pady=15, sticky="w")
-        user_reference_entry=ctk.CTkEntry(subscription_frame, placeholder_text="User ID or Name")
-        user_reference_entry.grid(row=5, column=1, padx=20, pady=15)
+        #user_reference_label=ctk.CTkLabel(subscription_frame, text="User Reference:", font=label_font)
+        #user_reference_label.grid(row=5, column=0, padx=20, pady=15, sticky="w")
+        #user_reference_entry=ctk.CTkEntry(subscription_frame, placeholder_text="User ID or Name")
+        #user_reference_entry.grid(row=5, column=1, padx=20, pady=15)
 
         # Create a "Register" button
-        register_button=ctk.CTkButton(outer_frame, text="Register", fg_color="Green",
+        register_button=ctk.CTkButton(outer_frame, text="Regjistro", fg_color="Green",
                                       text_color=("gray10", "gray90"),
                                       hover_color=("green3", "green4"),
                                       command=self.register_subscription)
@@ -916,19 +916,19 @@ class RegistrationFrame(ctk.CTkFrame):
 
         # Store the Entry fields and other widgets as instance attributes
         self.first_name_entry=self.first_name_entry
-        self.middle_name_entry=self.middle_name_entry
+        #self.middle_name_entry=self.middle_name_entry
         self.last_name_entry=self.last_name_entry
         self.age_entry=age_entry
         self.sex_entry=sex_entry
-        self.address_entry=address_entry
-        self.nationality_combo=nationality_combo
+        #self.address_entry=address_entry
+        #self.nationality_combo=nationality_combo
         self.contact_no_entry=contact_no_entry
-        self.email_entry=email_entry
-        self.emergency_contact_entry=emergency_contact_entry
+        #self.email_entry=email_entry
+        #self.emergency_contact_entry=emergency_contact_entry
         self.subscription_id_entry=self.subscription_id_entry
         # self.start_timestamp_entry=self.start_timestamp_entry
         # self.end_timestamp_entry=self.end_timestamp_entry
-        self.user_reference_entry=user_reference_entry
+        #self.user_reference_entry=user_reference_entry
 
         with sqlite3.connect('SQLite db/registration_form.db') as conn:
             cursor=conn.cursor()
@@ -1097,12 +1097,12 @@ class RegistrationFrame(ctk.CTkFrame):
     def register_subscription(self):
         # Gather data from the form fields
         first_name=self.first_name_entry.get()
-        middle_name=self.middle_name_entry.get()
+        #middle_name=self.middle_name_entry.get()
         last_name=self.last_name_entry.get()
         age=self.age_entry.get()
         sex=self.sex_entry.get()
-        birth_date=self.birth_date_entry.get()
-        address=self.address_entry.get()
+        #birth_date=self.birth_date_entry.get()
+        #address=self.address_entry.get()
         nationality=self.nationality_combo.get()
         contact_no=self.contact_no_entry.get()
         email=self.email_entry.get()
@@ -1208,8 +1208,9 @@ class RegistrationFrame(ctk.CTkFrame):
         messagebox.showinfo("Registration Successful", "User registered successfully!")
 
         # Clear all form fields
-        for entry in [self.first_name_entry, self.middle_name_entry, self.last_name_entry, self.age_entry,
-                      self.address_entry, self.contact_no_entry, self.email_entry,
+        # Kam fshire middle_name_entry, address_entry
+        for entry in [self.first_name_entry, self.last_name_entry, self.age_entry,
+                      self.contact_no_entry, self.email_entry,
                       self.emergency_contact_entry, self.subscription_id_entry,
                       self.user_reference_entry]:
             entry.delete(0, tk.END)
@@ -3164,8 +3165,8 @@ class TrainerFrame(ctk.CTkFrame):
 
         middle_name_label=ctk.CTkLabel(personal_info_frame, text="Middle Name:", font=label_font)
         middle_name_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
-        middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
-        middle_name_entry.grid(row=3, column=1, padx=20, pady=5)
+        #middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
+        #middle_name_entry.grid(row=3, column=1, padx=20, pady=5)
 
         last_name_label=ctk.CTkLabel(personal_info_frame, text="Last Name:", font=label_font)
         last_name_label.grid(row=4, column=0, padx=20, pady=5, sticky="w")
@@ -3185,21 +3186,21 @@ class TrainerFrame(ctk.CTkFrame):
         sex_entry.grid(row=7, column=1, padx=20, pady=5)
 
         # Create a DateEntry widget for the birthdate
-        birth_date_label=ctk.CTkLabel(personal_info_frame, text="Date of Birth:", font=label_font)
-        birth_date_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
+        #birth_date_label=ctk.CTkLabel(personal_info_frame, text="Date of Birth:", font=label_font)
+        #birth_date_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
 
         # Use the existing birth_date_entry you created
-        self.birth_date_entry=DateEntry(personal_info_frame, width=20, date_pattern="yyyy-mm-dd")
-        self.birth_date_entry.grid(row=5, column=1, padx=20, pady=15, sticky="w")
+        #self.birth_date_entry=DateEntry(personal_info_frame, width=20, date_pattern="yyyy-mm-dd")
+        #self.birth_date_entry.grid(row=5, column=1, padx=20, pady=15, sticky="w")
 
         # Bind the function to the <<DateEntrySelected>> event
-        self.birth_date_entry.bind("<<DateEntrySelected>>", self.calculate_age)
+        #self.birth_date_entry.bind("<<DateEntrySelected>>", self.calculate_age)
 
         # Address
-        address_label=ctk.CTkLabel(personal_info_frame, text="Address:", font=label_font)
-        address_label.grid(row=8, column=0, padx=20, pady=5, sticky="w")
-        address_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your address")
-        address_entry.grid(row=8, column=1, padx=20, pady=5)
+        #address_label=ctk.CTkLabel(personal_info_frame, text="Address:", font=label_font)
+        #address_label.grid(row=8, column=0, padx=20, pady=5, sticky="w")
+        #address_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your address")
+        #address_entry.grid(row=8, column=1, padx=20, pady=5)
 
         second_frame=ctk.CTkFrame(widget_frames)
         second_frame.grid(row=0, column=1, padx=10, pady=5)
@@ -3255,11 +3256,11 @@ class TrainerFrame(ctk.CTkFrame):
 
         # Store the Entry fields and other widgets as instance attributes
         self.first_name_entry=first_name_entry
-        self.middle_name_entry=middle_name_entry
+        #self.middle_name_entry=middle_name_entry
         self.last_name_entry=last_name_entry
         self.age_entry=age_entry
         self.sex_entry=sex_entry
-        self.address_entry=address_entry
+        #self.address_entry=address_entry
         self.nationality_combo=nationality_combo
         self.contact_no_entry=contact_no_entry
         self.emergency_contact_entry=emergency_contact_entry
@@ -3375,12 +3376,12 @@ class TrainerFrame(ctk.CTkFrame):
     def register_subscription(self):
         # Gather data from the form fields
         first_name=self.first_name_entry.get()
-        middle_name=self.middle_name_entry.get()
+        #middle_name=self.middle_name_entry.get()
         last_name=self.last_name_entry.get()
         age=self.age_entry.get()
         sex=self.sex_entry.get()
-        birth_date=self.birth_date_entry.get()
-        address=self.address_entry.get()
+        #birth_date=self.birth_date_entry.get()
+        #address=self.address_entry.get()
         nationality=self.nationality_combo.get()
         contact_no=self.contact_no_entry.get()
         emergency_contact_no=self.emergency_contact_entry.get()
@@ -3456,8 +3457,9 @@ class TrainerFrame(ctk.CTkFrame):
         messagebox.showinfo("Registration Successful", "Trainer registered successfully!")
 
         # Clear all form fields
-        for entry in [self.first_name_entry, self.middle_name_entry, self.last_name_entry, self.age_entry,
-                      self.address_entry, self.contact_no_entry, self.emergency_contact_entry]:
+        # Kam fshire middle_name_entry, address_entry
+        for entry in [self.first_name_entry, self.last_name_entry, self.age_entry,
+                      self.contact_no_entry, self.emergency_contact_entry]:
             entry.delete(0, tk.END)
 
     def back_button_event(self):
@@ -4369,8 +4371,8 @@ class LogbookFrame(ctk.CTkFrame):
 
         middle_name_label=ctk.CTkLabel(personal_info_frame, text="Middle Name:", font=label_font)
         middle_name_label.grid(row=3, column=0, padx=10, pady=15, sticky="w")
-        middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
-        middle_name_entry.grid(row=3, column=1, padx=10, pady=15)
+        #middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
+        #middle_name_entry.grid(row=3, column=1, padx=10, pady=15)
 
         last_name_label=ctk.CTkLabel(personal_info_frame, text="Last Name:", font=label_font)
         last_name_label.grid(row=4, column=0, padx=10, pady=15, sticky="w")
@@ -4889,15 +4891,15 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         sex_entry.grid(row=7, column=1, padx=20, pady=5)
 
         # Create a DateEntry widget for the birthdate
-        birth_date_label=ctk.CTkLabel(personal_info_frame, text="Date of Birth:", font=label_font)
-        birth_date_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
+        #birth_date_label=ctk.CTkLabel(personal_info_frame, text="Date of Birth:", font=label_font)
+        #birth_date_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
 
         # Use the existing birth_date_entry you created
-        self.birth_date_entry=DateEntry(personal_info_frame, width=20, date_pattern="yyyy-mm-dd")
-        self.birth_date_entry.grid(row=5, column=1, padx=20, pady=15, sticky="w")
+        #self.birth_date_entry=DateEntry(personal_info_frame, width=20, date_pattern="yyyy-mm-dd")
+        #self.birth_date_entry.grid(row=5, column=1, padx=20, pady=15, sticky="w")
 
         # Bind the function to the <<DateEntrySelected>> event
-        self.birth_date_entry.bind("<<DateEntrySelected>>", self.calculate_age)
+        #self.birth_date_entry.bind("<<DateEntrySelected>>", self.calculate_age)
 
         # Address
         address_label=ctk.CTkLabel(personal_info_frame, text="Address:", font=label_font)
@@ -5079,12 +5081,12 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
     def register_employees(self):
         # Gather data from the form fields
         first_name=self.first_name_entry.get()
-        middle_name=self.middle_name_entry.get()
+        #middle_name=self.middle_name_entry.get()
         last_name=self.last_name_entry.get()
         age=self.age_entry.get()
         sex=self.sex_entry.get()
-        birth_date=self.birth_date_entry.get()
-        address=self.address_entry.get()
+        #birth_date=self.birth_date_entry.get()
+        #address=self.address_entry.get()
         nationality=self.nationality_combo.get()
         contact_no=self.contact_no_entry.get()
         emergency_contact_no=self.emergency_contact_entry.get()
@@ -5092,8 +5094,7 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         # Validate the data (you can add your validation logic here)
 
         # Validate the data
-        if not (first_name and last_name and age and sex and birth_date and address and
-                nationality and contact_no and emergency_contact_no):
+        if not (first_name and last_name and age and sex and contact_no):
             messagebox.showerror("Validation Error", "All fields are required.")
             return
 
