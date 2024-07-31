@@ -526,6 +526,7 @@ def create_home_frame(home):
     get_gym_equipment_count()
 
     # -------------------FRAME 1 ----------------------#
+    '''
     graph_frame=ctk.CTkFrame(dashboard_frame)
     graph_frame.pack(pady=5, padx=10, fill="both", expand=True)
 
@@ -546,6 +547,7 @@ def create_home_frame(home):
     # Update the income report graph
     update_income_report(home, ax, canvas)
     canvas.draw()
+    '''
 
     # Make the rows and columns resizable
     for i in range(5):
@@ -889,12 +891,12 @@ class RegistrationFrame(ctk.CTkFrame):
         self.subscription_plan_entry.bind("<<ComboboxSelected>>", self.update_dates_on_subscription_change)
 
         # Button to trigger photo upload
-        upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
-        upload_button.grid(row=3, column=0, padx=20, pady=10, sticky="w")
+        #upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
+        #upload_button.grid(row=3, column=0, padx=20, pady=10, sticky="w")
 
         # Uploaded photo entry
-        self.uploaded_photo_entry=ctk.CTkEntry(subscription_frame, placeholder_text=".png/.jpg/etj")
-        self.uploaded_photo_entry.grid(row=3, column=1, padx=20, pady=10)
+        #self.uploaded_photo_entry=ctk.CTkEntry(subscription_frame, placeholder_text=".png/.jpg/etj")
+        #self.uploaded_photo_entry.grid(row=3, column=1, padx=20, pady=10)
 
         # Reference to the user who owns the subscription
         #user_reference_label=ctk.CTkLabel(subscription_frame, text="User Reference:", font=label_font)
@@ -938,23 +940,15 @@ class RegistrationFrame(ctk.CTkFrame):
                    CREATE TABLE IF NOT EXISTS registration (
                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                        first_name TEXT,
-                       middle_name TEXT,
                        last_name TEXT,
                        age INTEGER,
                        sex TEXT,
-                       birth_date DATE,
-                       address TEXT,
-                       nationality TEXT,
                        contact_no TEXT,
-                       email TEXT,
-                       emergency_contact_no TEXT,
                        subscription_id TEXT,
                        subscription_plan TEXT,
                        start_date DATE,
                        end_date DATE,
-                       user_reference TEXT,
-                       status TEXT DEFAULT 'Ongoing',
-                       photo_data BLOB
+                       status TEXT DEFAULT 'Ongoing'
                    )
                ''')
 
@@ -1103,18 +1097,17 @@ class RegistrationFrame(ctk.CTkFrame):
         sex=self.sex_entry.get()
         #birth_date=self.birth_date_entry.get()
         #address=self.address_entry.get()
-        nationality=self.nationality_combo.get()
+        #nationality=self.nationality_combo.get()
         contact_no=self.contact_no_entry.get()
-        email=self.email_entry.get()
-        emergency_contact_no=self.emergency_contact_entry.get()
+        #email=self.email_entry.get()
+        #emergency_contact_no=self.emergency_contact_entry.get()
         subscription_id=self.set_subscription_id()
         subscription_plan=self.subscription_plan_entry.get()
-        user_reference=self.user_reference_entry.get()
+        #user_reference=self.user_reference_entry.get()
 
         # Validate the data
-        if not (first_name and last_name and age and sex and birth_date and address and
-                nationality and contact_no and email and emergency_contact_no and
-                subscription_plan and user_reference):
+        if not (first_name and last_name and age and sex and contact_no and
+                subscription_plan):
             messagebox.showerror("Validation Error", "All fields are required.")
             return
 
@@ -1125,15 +1118,15 @@ class RegistrationFrame(ctk.CTkFrame):
             return
 
         # Validate contact_no length
-        if len(contact_no) != 11:
-            messagebox.showerror("Validation Error", "Contact No must be an 11-digit number.")
+        if len(contact_no) != 10:
+            messagebox.showerror("Validation Error", "Contact No must be an 10-digit number.")
             return
 
         # Calculate the age based on the provided birthdate
-        birth_date_obj=datetime.strptime(birth_date, '%Y-%m-%d')
-        current_date=datetime.now()
-        age=current_date.year - birth_date_obj.year - (
-                (current_date.month, current_date.day) < (birth_date_obj.month, birth_date_obj.day))
+        #birth_date_obj=datetime.strptime(birth_date, '%Y-%m-%d')
+        #current_date=datetime.now()
+        #age=current_date.year - birth_date_obj.year - (
+        #        (current_date.month, current_date.day) < (birth_date_obj.month, birth_date_obj.day))
 
         # Create a connection to the database
         conn=sqlite3.connect('SQLite db/registration_form.db')
@@ -1158,27 +1151,24 @@ class RegistrationFrame(ctk.CTkFrame):
         end_date_str=end_date.strftime('%Y-%m-%d')
 
         # Read the binary data of the photo from the member_profile directory
-        photo_file_name=self.uploaded_photo_entry.get()
-        photo_file_path=os.path.join("templates/member_profile", photo_file_name)
-        with open(photo_file_path, 'rb') as file:
-            photo_data=file.read()
+        #photo_file_name=self.uploaded_photo_entry.get()
+        #photo_file_path=os.path.join("templates/member_profile", photo_file_name)
+        #with open(photo_file_path, 'rb') as file:
+        #    photo_data=file.read()
 
         # Insert the data into the database
         cursor.execute('''
-           INSERT INTO registration (first_name, middle_name, last_name, age, sex, birth_date, address,
-                                   nationality, contact_no, email, emergency_contact_no, subscription_id,
-                                   subscription_plan, start_date, end_date, user_reference, photo_data)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (first_name, middle_name, last_name, age, sex, birth_date, address, nationality, contact_no,
-              email, emergency_contact_no, subscription_id, subscription_plan, start_date_str, end_date_str,
-              user_reference, sqlite3.Binary(photo_data)))
+           INSERT INTO registration (first_name, last_name, age, sex, contact_no, subscription_id,
+                                   subscription_plan, start_date, end_date)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (first_name,last_name, age, sex, contact_no, subscription_id, subscription_plan, start_date_str, end_date_str))
 
         # Commit the changes and close the database connection
         conn.commit()
         conn.close()
 
         # Combine all the data entries into a single string
-        data_string=f"{first_name},{middle_name},{last_name},{contact_no},{subscription_id}"
+        data_string=f"{first_name},{last_name},{contact_no},{subscription_id}"
 
         # Create a folder if it doesn't exist
         folder_path="templates/member_qrcodes"
@@ -1210,9 +1200,7 @@ class RegistrationFrame(ctk.CTkFrame):
         # Clear all form fields
         # Kam fshire middle_name_entry, address_entry
         for entry in [self.first_name_entry, self.last_name_entry, self.age_entry,
-                      self.contact_no_entry, self.email_entry,
-                      self.emergency_contact_entry, self.subscription_id_entry,
-                      self.user_reference_entry]:
+                      self.contact_no_entry, self.subscription_id_entry]:
             entry.delete(0, tk.END)
 
     def back_button_event(self):
@@ -1475,18 +1463,18 @@ class EditForm(ctk.CTkToplevel):
         main_frame.pack(fill="both", expand=True)
 
         # Display the photo stored as BLOB data
-        photo_blob=self.member_data[-1]  # Assuming the photo is stored in the last column
-        photo=Image.open(io.BytesIO(photo_blob))
-        photo=photo.resize((150, 150), Image.LANCZOS)
-        photo=ImageTk.PhotoImage(photo)
-        photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
-        photo_label.image=photo
-        photo_label.pack(pady=10, padx=10)
+        #photo_blob=self.member_data[-1]  # Assuming the photo is stored in the last column
+        #photo=Image.open(io.BytesIO(photo_blob))
+        #photo=photo.resize((150, 150), Image.LANCZOS)
+        #photo=ImageTk.PhotoImage(photo)
+        #photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
+        #photo_label.image=photo
+        #photo_label.pack(pady=10, padx=10)
 
-        change_button_frame=ctk.CTkFrame(main_frame)
-        change_button_frame.pack(pady=5, padx=10)
-        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
-        change_photo_button.pack(pady=5, padx=10)
+        #change_button_frame=ctk.CTkFrame(main_frame)
+        #change_button_frame.pack(pady=5, padx=10)
+        #change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
+        #change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
         edit_frame=ctk.CTkScrollableFrame(main_frame, width=450, height=200)
@@ -3222,12 +3210,12 @@ class TrainerFrame(ctk.CTkFrame):
         #emergency_contact_entry.pack(pady=10, padx=10, fill="x")
 
         # Button to trigger photo upload
-        upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_trainer_photo)
-        upload_button.pack(pady=5, padx=10, fill="x")
+        #upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_trainer_photo)
+        #upload_button.pack(pady=5, padx=10, fill="x")
 
         # Uploaded photo entry
-        self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etj")
-        self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
+        #self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etj")
+        #self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
 
         # Create a "Register" button
         register_button=ctk.CTkButton(outer_frame, text="Regjistro", fg_color="Green",
@@ -3266,10 +3254,8 @@ class TrainerFrame(ctk.CTkFrame):
                        last_name TEXT,
                        age INTEGER,
                        sex TEXT,
-                       birth_date DATE,
                        contact_no TEXT,
-                       status TEXT DEFAULT 'Active',
-                       photo_data BLOB
+                       status TEXT DEFAULT 'Active'
                    )
                ''')
 
@@ -3397,9 +3383,9 @@ class TrainerFrame(ctk.CTkFrame):
 
         cursor.execute('''
             INSERT INTO trainer (
-                first_name, last_name, age, sex, contact_no, status, photo_data
+                first_name, last_name, age, sex, contact_no, status
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?)
         ''', (
             first_name, last_name, age, sex, contact_no, status, sqlite3.Binary(photo_data)))
 
@@ -3687,18 +3673,18 @@ class EditTrainerForm(ctk.CTkToplevel):
         main_frame.pack(fill="both", expand=True)
 
         # Display the photo stored as BLOB data
-        photo_blob=self.trainer_data[-1]  # Assuming the photo is stored in the last column
-        photo=Image.open(io.BytesIO(photo_blob))
-        photo=photo.resize((150, 150), Image.LANCZOS)
-        photo=ImageTk.PhotoImage(photo)
-        photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
-        photo_label.image=photo
-        photo_label.pack(pady=5, padx=10)
+        #photo_blob=self.trainer_data[-1]  # Assuming the photo is stored in the last column
+        #photo=Image.open(io.BytesIO(photo_blob))
+        #photo=photo.resize((150, 150), Image.LANCZOS)
+        #photo=ImageTk.PhotoImage(photo)
+        #photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
+        #photo_label.image=photo
+        #photo_label.pack(pady=5, padx=10)
 
-        change_button_frame=ctk.CTkFrame(main_frame)
-        change_button_frame.pack(pady=10, padx=10)
-        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
-        change_photo_button.pack(pady=5, padx=10)
+        #change_button_frame=ctk.CTkFrame(main_frame)
+        #change_button_frame.pack(pady=10, padx=10)
+        #change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
+        #change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
         edit_frame=ctk.CTkScrollableFrame(main_frame, width=450, height=200)
@@ -4918,12 +4904,12 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         #emergency_contact_entry.pack(pady=5, padx=10, fill="x")
 
         # Button to trigger photo upload
-        upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_employee_photo)
-        upload_button.pack(pady=5, padx=10, fill="x")
+        #upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_employee_photo)
+        #upload_button.pack(pady=5, padx=10, fill="x")
 
         # Uploaded photo entry
-        self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etc")
-        self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
+        #self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etc")
+        #self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
 
         # Create a "Register" button
         register_button=ctk.CTkButton(outer_frame, text="Regjistro", fg_color="Green",
@@ -5380,18 +5366,18 @@ class EditEmployeeForm(ctk.CTkToplevel):
         main_frame.pack(fill="both", expand=True)
 
         # Display the photo stored as BLOB data
-        photo_blob=self.employee_data[-1]  # Assuming the photo is stored in the last column
-        photo=Image.open(io.BytesIO(photo_blob))
-        photo=photo.resize((150, 150), Image.LANCZOS)
-        photo=ImageTk.PhotoImage(photo)
-        photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
-        photo_label.image=photo
-        photo_label.pack(pady=5, padx=10)
+        #photo_blob=self.employee_data[-1]  # Assuming the photo is stored in the last column
+        #photo=Image.open(io.BytesIO(photo_blob))
+        #photo=photo.resize((150, 150), Image.LANCZOS)
+        #photo=ImageTk.PhotoImage(photo)
+        #photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
+        #photo_label.image=photo
+        #photo_label.pack(pady=5, padx=10)
 
-        change_button_frame=ctk.CTkFrame(main_frame)
-        change_button_frame.pack(pady=10, padx=10)
-        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
-        change_photo_button.pack(pady=5, padx=10)
+        #change_button_frame=ctk.CTkFrame(main_frame)
+        #change_button_frame.pack(pady=10, padx=10)
+        #change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
+        #change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
         edit_frame=ctk.CTkScrollableFrame(main_frame, width=450, height=200)

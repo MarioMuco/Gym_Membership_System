@@ -6,16 +6,12 @@ abonim ditor
 abonim disa mujor
 si llogaritet incomi
 nese expired te dali i kuq te lisat
-
-
-
-
-
-
-
+edit njesoj si te pajisjet
+sun plan check is english
+edit info e te rinjve broken
 
 check_date
-update_income_report
 create_gym_membership_frame - lloji i anetaresimi duhet edhe disa muaj
-
+update_dates_on_subscription_change
+hiqe create new ne publication
 
