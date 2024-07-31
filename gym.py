@@ -288,7 +288,7 @@ class MainApp(ctk.CTk):
         self.select_frame_by_name("home")
         create_home_frame(self.home_frame)  # Call the function to create home frame
         create_gym_membership_frame(self.second_frame)  # Call the function to create gym membership frame
-        create_take_attendance_frame(self.third_frame)
+        #create_take_attendance_frame(self.third_frame)
         create_gym_equipment_frame(self.fourth_frame)
         create_trainers_frame(self.fifth_frame)
         create_visitors_frame(self.sixth_frame)
@@ -1788,7 +1788,7 @@ class RenewSubscriptionFrame(ctk.CTkToplevel):
         super().__init__(master)
 
         # Set the title for the edit form
-        self.resizable(False, False)
+        self.resizable(True, True)
         self.title("Membership Renewal")
         self.geometry("500x500")
 
@@ -2874,7 +2874,7 @@ class EditRecord(ctk.CTkToplevel):
         super().__init__(master)
 
         # Set the title for the edit form
-        self.resizable(False, False)
+        self.resizable(True, True)
         self.title("Ndrysho te dhenat")
         self.geometry("500x550")
 
@@ -3047,8 +3047,8 @@ class EditRecord(ctk.CTkToplevel):
 
 def create_trainers_frame(frame_5):
     # Define the desired button width and height
-    button_width=250
-    button_height=250
+    button_width=300
+    button_height=300
 
     # Define the path to the directory containing your image files
     frame_5_icons=os.path.join(os.path.dirname(os.path.realpath(__file__)), "templates/frame_5_icons")
@@ -3060,8 +3060,8 @@ def create_trainers_frame(frame_5):
     view_image=Image.open(os.path.join(frame_5_icons, 'list_black.png'))
     view_image=view_image.resize((button_width, button_height), Image.LANCZOS)
 
-    take_attendance=Image.open(os.path.join(frame_5_icons, 'scan_black.png'))
-    take_attendance=take_attendance.resize((button_width, button_height), Image.LANCZOS)  # Fix this line
+    #take_attendance=Image.open(os.path.join(frame_5_icons, 'scan_black.png'))
+    #take_attendance=take_attendance.resize((button_width, button_height), Image.LANCZOS)  # Fix this line
 
     def register_trainer():
         # When the "Register Members" button is clicked, create and show the registration frame
@@ -3073,14 +3073,14 @@ def create_trainers_frame(frame_5):
         view_trainer_frame=ViewTrainerFrame(frame_5)
         view_trainer_frame.pack(fill='both', expand=True)
 
-    def trainer_attendance():
-        trainer_attendance_frame=TrainerAttendanceFrame(frame_5)
-        trainer_attendance_frame.pack(fill='both', expand=True)
+    #def trainer_attendance():
+        #trainer_attendance_frame=TrainerAttendanceFrame(frame_5)
+        #trainer_attendance_frame.pack(fill='both', expand=True)
 
     # Create the buttons with the resized images
     register_trainer_button=ctk.CTkButton(
         master=frame_5,
-        text="Register Trainer",
+        text="Regjistro Trainer",
         image=ImageTk.PhotoImage(register_image),
         compound=tk.TOP,
         command=register_trainer,  # Call the function to open the frame
@@ -3089,11 +3089,11 @@ def create_trainers_frame(frame_5):
         fg_color="#00C957",
         text_color=("gray10", "gray90")
     )
-    register_trainer_button.place(x=100, y=180)
+    register_trainer_button.place(x=150, y=150)
 
     view_trainer_button=ctk.CTkButton(
         master=frame_5,
-        text="View Trainer Records",
+        text="Shiko Traineret",
         image=ImageTk.PhotoImage(view_image),
         compound=tk.TOP,
         command=view_trainer,
@@ -3102,20 +3102,20 @@ def create_trainers_frame(frame_5):
         fg_color="#00C957",
         text_color=("gray10", "gray90")
     )
-    view_trainer_button.place(x=400, y=180)
+    view_trainer_button.place(x=600, y=150)
 
-    trainer_attendance_button=ctk.CTkButton(
-        master=frame_5,
-        text="Trainer Attendance",
-        image=ImageTk.PhotoImage(take_attendance),
-        compound=tk.TOP,
-        command=trainer_attendance,
-        width=button_width,
-        height=button_height,
-        fg_color="#00C957",
-        text_color=("gray10", "gray90")
-    )
-    trainer_attendance_button.place(x=700, y=180)
+    #trainer_attendance_button=ctk.CTkButton(
+        #master=frame_5,
+        #text="Trainer Attendance",
+        #image=ImageTk.PhotoImage(take_attendance),
+        #compound=tk.TOP,
+        #command=trainer_attendance,
+        #width=button_width,
+        #height=button_height,
+        #fg_color="#00C957",
+        #text_color=("gray10", "gray90")
+    #)
+    #trainer_attendance_button.place(x=700, y=180)
 
 
 class TrainerFrame(ctk.CTkFrame):
@@ -3124,7 +3124,7 @@ class TrainerFrame(ctk.CTkFrame):
 
         # STEP 1: PERSONAL INFORMATION
         # Define and configure widgets within the frame
-        label=ctk.CTkLabel(self, text="Register Trainer", font=("Arial bold", 26))
+        label=ctk.CTkLabel(self, text="Regjistro Trainer", font=("Arial bold", 26))
         label.pack(pady=20, padx=10)
 
         # outer frame
@@ -3145,9 +3145,9 @@ class TrainerFrame(ctk.CTkFrame):
         label_font=ctk.CTkFont(family="Arial bold", size=16)  # Adjust the size as
 
         # Name
-        first_name_label=ctk.CTkLabel(personal_info_frame, text="First Name:", font=label_font)
+        first_name_label=ctk.CTkLabel(personal_info_frame, text="Emri:", font=label_font)
         first_name_label.grid(row=2, column=0, padx=20, pady=5, sticky="w")
-        first_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your first name")
+        first_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Emri")
         first_name_entry.grid(row=2, column=1, padx=20, pady=5)
 
         #middle_name_label=ctk.CTkLabel(personal_info_frame, text="Middle Name:", font=label_font)
@@ -3155,21 +3155,21 @@ class TrainerFrame(ctk.CTkFrame):
         #middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
         #middle_name_entry.grid(row=3, column=1, padx=20, pady=5)
 
-        last_name_label=ctk.CTkLabel(personal_info_frame, text="Last Name:", font=label_font)
+        last_name_label=ctk.CTkLabel(personal_info_frame, text="Mbiemri:", font=label_font)
         last_name_label.grid(row=4, column=0, padx=20, pady=5, sticky="w")
-        last_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your last name")
+        last_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Mbiemri")
         last_name_entry.grid(row=4, column=1, padx=20, pady=5)
 
         # Age
-        age_label=ctk.CTkLabel(personal_info_frame, text="Age:", font=label_font)
+        age_label=ctk.CTkLabel(personal_info_frame, text="Mosha:", font=label_font)
         age_label.grid(row=6, column=0, padx=20, pady=5, sticky="w")
-        age_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your age")
+        age_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Mosha")
         age_entry.grid(row=6, column=1, padx=20, pady=5)
 
         # Sex
-        sex_label=ctk.CTkLabel(personal_info_frame, text="Sex:", font=label_font)
+        sex_label=ctk.CTkLabel(personal_info_frame, text="Gjinia:", font=label_font)
         sex_label.grid(row=7, column=0, padx=20, pady=5, sticky="w")
-        sex_entry=ctk.CTkComboBox(personal_info_frame, values=["Male", "Female", "Other"])
+        sex_entry=ctk.CTkComboBox(personal_info_frame, values=["Mashkull", "Femer"])
         sex_entry.grid(row=7, column=1, padx=20, pady=5)
 
         # Create a DateEntry widget for the birthdate
@@ -3198,39 +3198,39 @@ class TrainerFrame(ctk.CTkFrame):
         label_font=ctk.CTkFont(family="Arial bold", size=16)  # Adjust the size as
 
         # Assuming you have a list of nationalities
-        nationalities_list=["Select Nationality", "Filipino", "American", "Chinese", "Japanese", "Korean", "Other"]
+        #nationalities_list=["Select Nationality", "Filipino", "American", "Chinese", "Japanese", "Korean", "Other"]
 
         # Nationality Label
-        nationality_label=ctk.CTkLabel(contact_frame, text="Nationality:", font=label_font)
-        nationality_label.pack(pady=5, padx=10, anchor="w")
+        #nationality_label=ctk.CTkLabel(contact_frame, text="Nationality:", font=label_font)
+        #nationality_label.pack(pady=5, padx=10, anchor="w")
 
         # Create a CTkComboBox widget for nationalities
-        nationality_combo=ctk.CTkComboBox(contact_frame, values=nationalities_list)
-        nationality_combo.pack(pady=5, padx=10, fill="x")
-        nationality_combo.set("Select Nationality")  # Set a default selection
+        #nationality_combo=ctk.CTkComboBox(contact_frame, values=nationalities_list)
+        #nationality_combo.pack(pady=5, padx=10, fill="x")
+        #nationality_combo.set("Select Nationality")  # Set a default selection
 
         # Contact No
-        contact_no_label=ctk.CTkLabel(contact_frame, text="Contact No:", font=label_font)
+        contact_no_label=ctk.CTkLabel(contact_frame, text="Numri i kontaktit:", font=label_font)
         contact_no_label.pack(pady=3, padx=10, anchor="w")
-        contact_no_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
+        contact_no_entry=ctk.CTkEntry(contact_frame, placeholder_text="06--------")
         contact_no_entry.pack(pady=0, padx=10, fill="x")
 
         # Emergency Contact No
-        emergency_contact_label=ctk.CTkLabel(contact_frame, text="Emergency Contact No:", font=label_font)
-        emergency_contact_label.pack(pady=0, padx=10, anchor="w")
-        emergency_contact_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
-        emergency_contact_entry.pack(pady=10, padx=10, fill="x")
+        #emergency_contact_label=ctk.CTkLabel(contact_frame, text="Emergency Contact No:", font=label_font)
+        #emergency_contact_label.pack(pady=0, padx=10, anchor="w")
+        #emergency_contact_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
+        #emergency_contact_entry.pack(pady=10, padx=10, fill="x")
 
         # Button to trigger photo upload
-        upload_button=ctk.CTkButton(contact_frame, text="Upload Photo", command=self.upload_trainer_photo)
+        upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_trainer_photo)
         upload_button.pack(pady=5, padx=10, fill="x")
 
         # Uploaded photo entry
-        self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etc")
+        self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etj")
         self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
 
         # Create a "Register" button
-        register_button=ctk.CTkButton(outer_frame, text="Register", fg_color="Green",
+        register_button=ctk.CTkButton(outer_frame, text="Regjistro", fg_color="Green",
                                       text_color=("gray10", "gray90"),
                                       hover_color=("green3", "green4"),
                                       command=self.register_subscription)
@@ -3248,9 +3248,9 @@ class TrainerFrame(ctk.CTkFrame):
         self.age_entry=age_entry
         self.sex_entry=sex_entry
         #self.address_entry=address_entry
-        self.nationality_combo=nationality_combo
+        #self.nationality_combo=nationality_combo
         self.contact_no_entry=contact_no_entry
-        self.emergency_contact_entry=emergency_contact_entry
+        #self.emergency_contact_entry=emergency_contact_entry
 
         # Create a connection to the database (or create it if it doesn't exist)
         conn=sqlite3.connect('SQLite db/register_trainer.db')
@@ -3263,15 +3263,11 @@ class TrainerFrame(ctk.CTkFrame):
                    CREATE TABLE IF NOT EXISTS trainer (
                        id INTEGER PRIMARY KEY,
                        first_name TEXT,
-                       middle_name TEXT,
                        last_name TEXT,
                        age INTEGER,
                        sex TEXT,
                        birth_date DATE,
-                       address TEXT,
-                       nationality TEXT,
                        contact_no TEXT,
-                       emergency_contact_no TEXT,
                        status TEXT DEFAULT 'Active',
                        photo_data BLOB
                    )
@@ -3369,15 +3365,15 @@ class TrainerFrame(ctk.CTkFrame):
         sex=self.sex_entry.get()
         #birth_date=self.birth_date_entry.get()
         #address=self.address_entry.get()
-        nationality=self.nationality_combo.get()
+        #nationality=self.nationality_combo.get()
         contact_no=self.contact_no_entry.get()
-        emergency_contact_no=self.emergency_contact_entry.get()
+        #emergency_contact_no=self.emergency_contact_entry.get()
 
         # Validate the data (you can add your validation logic here)
 
         # Validate the data
-        if not (first_name and last_name and age and sex and birth_date and address and
-                nationality and contact_no and emergency_contact_no):
+        if not (first_name and last_name and age and sex and
+                contact_no):
             messagebox.showerror("Validation Error", "All fields are required.")
             return
 
@@ -3401,20 +3397,18 @@ class TrainerFrame(ctk.CTkFrame):
 
         cursor.execute('''
             INSERT INTO trainer (
-                first_name, middle_name, last_name, age, sex, birth_date, address,
-                nationality, contact_no, emergency_contact_no, status, photo_data
+                first_name, last_name, age, sex, contact_no, status, photo_data
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', (
-            first_name, middle_name, last_name, age, sex, birth_date, address,
-            nationality, contact_no, emergency_contact_no, status, sqlite3.Binary(photo_data)))
+            first_name, last_name, age, sex, contact_no, status, sqlite3.Binary(photo_data)))
 
         # Commit the changes and close the database connection
         conn.commit()
         conn.close()
 
         # Combine all the data entries into a single string
-        data_string=f"{first_name},{middle_name},{last_name},{contact_no}"
+        data_string=f"{first_name},{last_name},{contact_no}"
 
         # Create a folder if it doesn't exist
         folder_path="templates/trainer_qrcodes"
@@ -3458,7 +3452,7 @@ class ViewTrainerFrame(ctk.CTkFrame):
         super().__init__(master, **kwargs)
 
         # Define and configure widgets within the frame
-        label=ctk.CTkLabel(self, text="Trainer Information", font=("Arial bold", 28))
+        label=ctk.CTkLabel(self, text="Te dhenat e trainereve", font=("Arial bold", 28))
         label.pack(pady=20, padx=10)
 
         # Create frame to hold the search bar
@@ -3466,16 +3460,16 @@ class ViewTrainerFrame(ctk.CTkFrame):
         search_frame.pack(pady=10, padx=10, fill="x")
 
         # Create a search bar
-        search_entry=ctk.CTkEntry(search_frame, placeholder_text="Enter a name to search")
+        search_entry=ctk.CTkEntry(search_frame, placeholder_text="Kerko sipas emrit")
         search_entry.pack(padx=10, pady=10, side="left", fill="both", expand=True)
 
-        clear_button=ctk.CTkButton(search_frame, text="Clear", command=lambda: self.search_entry_clear(search_entry),
+        clear_button=ctk.CTkButton(search_frame, text="Fshi", command=lambda: self.search_entry_clear(search_entry),
                                    fg_color="red",
                                    hover_color="red4", text_color=("gray10", "gray90"))
         clear_button.pack(side="right", padx=(5, 10))  # Add padding to separate the buttons
 
         # Create a search button
-        search_button=ctk.CTkButton(search_frame, text="Search", command=lambda: self.search_record(search_entry.get()))
+        search_button=ctk.CTkButton(search_frame, text="Kerko", command=lambda: self.search_record(search_entry.get()))
         search_button.pack(side="right")
 
         # Create a connection to the database
@@ -3484,7 +3478,7 @@ class ViewTrainerFrame(ctk.CTkFrame):
 
         # Get only the specific columns from the database
         cursor.execute(
-            "SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status FROM trainer")
+            "SELECT id, first_name, last_name, age, sex, contact_no, status FROM trainer")
         records=cursor.fetchall()
 
         # Create a frame that holds the table
@@ -3514,7 +3508,7 @@ class ViewTrainerFrame(ctk.CTkFrame):
 
         # Create a table to display the records
         self.table=ttk.Treeview(table_frame, columns=(
-            "ID", "First Name", "Last Name", "Age", "Sex", "Contact No", "Status"), show="headings",
+            "ID", "Emri", "Mbiemri", "Mosha", "Gjinia", "Numri i kontaktit", "Status"), show="headings",
                                 height=8)
         self.table.pack(side=tk.LEFT)
 
@@ -3525,22 +3519,22 @@ class ViewTrainerFrame(ctk.CTkFrame):
 
         # Configure the columns
         self.table.heading("ID", text="ID")
-        self.table.heading("First Name", text="First Name")
+        self.table.heading("Emri", text="Emri")
         #self.table.heading("Middle Name", text="Middle Name")
-        self.table.heading("Last Name", text="Last Name")
-        self.table.heading("Age", text="Age")
-        self.table.heading("Sex", text="Sex")
-        self.table.heading("Contact No", text="Contact No")
+        self.table.heading("Mbiemri", text="Mbiemri")
+        self.table.heading("Mosha", text="Mosha")
+        self.table.heading("Gjinia", text="Gjinia")
+        self.table.heading("Numri i kontaktit", text="Numri i kontaktit")
         self.table.heading("Status", text="Status")
 
         # Define the column headings and their alignment
         columns=[
             ("ID", "center"),
-            ("First Name", "center"),
-            ("Last Name", "center"),
-            ("Age", "center"),
-            ("Sex", "center"),
-            ("Contact No", "center"),
+            ("Emri", "center"),
+            ("Mbiemri", "center"),
+            ("Mosha", "center"),
+            ("Gjinia", "center"),
+            ("Numri i kontaktit", "center"),
             ("Status", "center")
         ]
 
@@ -3551,11 +3545,11 @@ class ViewTrainerFrame(ctk.CTkFrame):
         # column width
         columns=[
             ("ID", "50"),
-            ("First Name", "200"),
-            ("Last Name", "200"),
-            ("Age", "100"),
-            ("Sex", "100"),
-            ("Contact No", "200"),
+            ("Emri", "200"),
+            ("Mbiemri", "200"),
+            ("Mosha", "100"),
+            ("Gjinia", "100"),
+            ("Numri i kontaktit", "200"),
             ("Status", "150")
         ]
 
@@ -3577,7 +3571,7 @@ class ViewTrainerFrame(ctk.CTkFrame):
         view_button_frame=ctk.CTkFrame(button_frames)
         view_button_frame.grid(row=0, column=1, padx=10, pady=10)
         # Create an "Edit" button in the second column
-        view_button=ctk.CTkButton(view_button_frame, text="View", command=self.edit_record)
+        view_button=ctk.CTkButton(view_button_frame, text="Ndrysho", command=self.edit_record)
         view_button.pack(padx=10, pady=10)
 
         # Create a "Back" button to return to the previous frame
@@ -3600,7 +3594,7 @@ class ViewTrainerFrame(ctk.CTkFrame):
 
         # Search for records that match the search term
         cursor.execute(
-            "SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status from trainer WHERE first_name LIKE ? OR last_name LIKE ?",
+            "SELECT id, first_name, last_name, age, sex, contact_no, status from trainer WHERE first_name LIKE ? OR last_name LIKE ?",
             ('%' + search_term + '%', '%' + search_term + '%'))
         records=cursor.fetchall()
 
@@ -3631,7 +3625,7 @@ class ViewTrainerFrame(ctk.CTkFrame):
 
         # Retrieve all records
         cursor.execute(
-            "SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status FROM trainer")
+            "SELECT id, first_name, last_name, age, sex, contact_no, status FROM trainer")
         records=cursor.fetchall()
 
         # Close the database connection
@@ -3658,8 +3652,8 @@ class EditTrainerForm(ctk.CTkToplevel):
         super().__init__(master)
 
         # Set the title for the edit form
-        self.resizable(False, False)
-        self.title("Edit Info")
+        self.resizable(True, True)
+        self.title("Ndrysho te dhenat")
         self.geometry("500x550")
 
         # Center-align the window
@@ -3685,7 +3679,7 @@ class EditTrainerForm(ctk.CTkToplevel):
             return
 
         # Create and configure widgets within the edit form
-        label=ctk.CTkLabel(self, text="Edit Trainer Information", font=("Arial bold", 20))
+        label=ctk.CTkLabel(self, text="Ndrysho te dhenat e trainerit", font=("Arial bold", 20))
         label.pack(pady=10)
 
         # Create a frame to hold edit form frames
@@ -3703,7 +3697,7 @@ class EditTrainerForm(ctk.CTkToplevel):
 
         change_button_frame=ctk.CTkFrame(main_frame)
         change_button_frame.pack(pady=10, padx=10)
-        change_photo_button=ctk.CTkButton(change_button_frame, text="Change Image", command=self.change_photo)
+        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
         change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
@@ -3714,8 +3708,7 @@ class EditTrainerForm(ctk.CTkToplevel):
         label_font=ctk.CTkFont(family="Arial", size=16, weight="bold")
 
         # Create labels and entry fields for editing the record
-        labels=["First Name:","Last Name:", "Age:", "Sex:", "Date of Birth:", "Address:",
-                "Nationality:", "Contact No:", "Emergency Contact No:", "Status:"]
+        labels=["Emri:","Mbiemri:", "Mosha:", "Gjinia:", "Numri i kontaktit:","Status:"]
         self.entry_fields=[]
         self.status_combobox=None  # Initialize status_combobox attribute
 
@@ -3738,27 +3731,27 @@ class EditTrainerForm(ctk.CTkToplevel):
                 self.entry_fields.append(entry)
 
         # Display the qr code of the member inside the edit form
-        qr_code_frame=ctk.CTkFrame(edit_frame)
-        qr_code_frame.grid(row=17, column=1, rowspan=16, padx=10, pady=10)
+        #qr_code_frame=ctk.CTkFrame(edit_frame)
+        #qr_code_frame.grid(row=17, column=1, rowspan=16, padx=10, pady=10)
 
-        label=ctk.CTkLabel(edit_frame, text="QR Code:", font=("Arial bold", 16))
-        label.grid(row=17, column=0, padx=10, pady=10, sticky="w")
+        #label=ctk.CTkLabel(edit_frame, text="QR Code:", font=("Arial bold", 16))
+        #label.grid(row=17, column=0, padx=10, pady=10, sticky="w")
 
-        download_button_frame=ctk.CTkFrame(edit_frame)
-        download_button_frame.grid(row=50, column=1, rowspan=50, padx=10, pady=10)
+        #download_button_frame=ctk.CTkFrame(edit_frame)
+        #download_button_frame.grid(row=50, column=1, rowspan=50, padx=10, pady=10)
 
         # create a download button to download the qr code
-        download_button=ctk.CTkButton(download_button_frame, text="Download", command=self.download_qr_code)
-        download_button.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        #download_button=ctk.CTkButton(download_button_frame, text="Download", command=self.download_qr_code)
+        #download_button.grid(row=0, column=1, padx=10, pady=10, sticky="w")
 
         # Display the qr code from the member_qrcodes folder based on the last name of the member
-        qr_code_path=os.path.join("templates/trainer_qrcodes", f"dgrit_trainer_{self.trainer_data[3]}.png")
-        qr_code_image=Image.open(qr_code_path)
-        qr_code_image=qr_code_image.resize((200, 200), Image.LANCZOS)
-        qr_code_image=ImageTk.PhotoImage(qr_code_image)
-        qr_code_label=ctk.CTkLabel(qr_code_frame, text="", image=qr_code_image)
-        qr_code_label.image=qr_code_image
-        qr_code_label.pack(pady=10, padx=10)
+        #qr_code_path=os.path.join("templates/trainer_qrcodes", f"dgrit_trainer_{self.trainer_data[3]}.png")
+        #qr_code_image=Image.open(qr_code_path)
+        #qr_code_image=qr_code_image.resize((200, 200), Image.LANCZOS)
+        #qr_code_image=ImageTk.PhotoImage(qr_code_image)
+        #qr_code_label=ctk.CTkLabel(qr_code_frame, text="", image=qr_code_image)
+        #qr_code_label.image=qr_code_image
+        #qr_code_label.pack(pady=10, padx=10)
 
         frame_buttons=ctk.CTkFrame(main_frame)
         frame_buttons.pack(pady=10, padx=20)
@@ -3768,7 +3761,7 @@ class EditTrainerForm(ctk.CTkToplevel):
         update_button_frame.grid(row=0, column=0, padx=20, pady=10)
 
         # Create an "Update" button
-        update_button=ctk.CTkButton(update_button_frame, text="Update", command=self.update_record)
+        update_button=ctk.CTkButton(update_button_frame, text="Ndrysho", command=self.update_record)
         update_button.grid(row=0, column=0, padx=20, pady=5)
 
         # create a frame to hold the delete button
@@ -3776,7 +3769,7 @@ class EditTrainerForm(ctk.CTkToplevel):
         delete_button_frame.grid(row=0, column=1, padx=20, pady=10)
 
         # Create Red Delete button
-        delete_button=ctk.CTkButton(delete_button_frame, text="Delete", fg_color="Red",
+        delete_button=ctk.CTkButton(delete_button_frame, text="Fshi", fg_color="Red",
                                     text_color=("gray10", "gray90"),
                                     hover_color=("red3", "red4"), command=self.delete_record)
         delete_button.grid(row=0, column=0, padx=20, pady=5)
@@ -3822,7 +3815,7 @@ class EditTrainerForm(ctk.CTkToplevel):
         # Fetch the updated records from the database
         conn=sqlite3.connect('SQLite db/register_trainer.db')
         cursor=conn.cursor()
-        cursor.execute("SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status FROM trainer")
+        cursor.execute("SELECT id, first_name, last_name, age, sex, contact_no, status FROM trainer")
         updated_records=cursor.fetchall()
         conn.close()
 
@@ -3836,8 +3829,7 @@ class EditTrainerForm(ctk.CTkToplevel):
     def update_record(self):
         # Get the updated data from the entry fields, including the status
         updated_data=[entry.get() if label_text != "Status:" else self.status_combobox.get() for label_text, entry in
-                      zip(["First Name:", "Middle Name:", "Last Name:", "Age:", "Sex:", "Date of Birth:", "Address:",
-                           "Nationality:", "Contact No:", "Emergency Contact No:", "Status:"],
+                      zip(["First Name:", "Last Name:", "Age:", "Sex:",  "Contact No:", "Status:"],
                           self.entry_fields)]
 
         # Validate the updated data
@@ -3851,8 +3843,8 @@ class EditTrainerForm(ctk.CTkToplevel):
                 cursor=conn.cursor()
                 cursor.execute('''
                     UPDATE trainer SET 
-                    first_name=?, middle_name=?, last_name=?, age=?, sex=?, birth_date=?, address=?, nationality=?,
-                    contact_no=?, emergency_contact_no=?, status=?
+                    first_name=?, last_name=?, age=?, sex=?,
+                    contact_no=?, status=?
                     WHERE id=?
                 ''', tuple(updated_data + [self.trainer_data[0]]))
 
@@ -3916,18 +3908,18 @@ class TrainerAttendanceFrame(ctk.CTkFrame):
         time_out_image=time_out_image.resize((button_width, button_height), Image.LANCZOS)
 
         # Create the buttons with the resized images
-        take_attendance_button=ctk.CTkButton(
-            master=self,
-            text="Take Attendance",
-            image=ImageTk.PhotoImage(scan_image),
-            compound=tk.TOP,
-            command=self.take_attendance,
-            width=button_width,
-            height=button_height,
-            fg_color="#00C957",
-            text_color=("gray10", "gray90")
-        )
-        take_attendance_button.place(x=300, y=150)
+        #take_attendance_button=ctk.CTkButton(
+        #    master=self,
+        #    text="Take Attendance",
+        #    image=ImageTk.PhotoImage(scan_image),
+        #    compound=tk.TOP,
+        #    command=self.take_attendance,
+        #    width=button_width,
+        #    height=button_height,
+        #    fg_color="#00C957",
+        #    text_color=("gray10", "gray90")
+        #)
+        #take_attendance_button.place(x=300, y=150)
 
         attendance_records_button=ctk.CTkButton(
             master=self,
@@ -4749,8 +4741,8 @@ class LogbookFrame(ctk.CTkFrame):
 # -------------------- FRAME 7 --------------------#
 def create_employee_frame(frame_7):
     # Define the desired button width and height
-    button_width=250
-    button_height=250
+    button_width=300
+    button_height=300
 
     # Define the path to the directory containing your image files
     frame_7_icons=os.path.join(os.path.dirname(os.path.realpath(__file__)), "templates/frame_7_icons")
@@ -4792,7 +4784,7 @@ def create_employee_frame(frame_7):
         fg_color="#00C957",
         text_color=("gray10", "gray90")
     )
-    register_employee_button.place(x=100, y=180)
+    register_employee_button.place(x=100, y=150)
 
     view_employee_button=ctk.CTkButton(
         master=frame_7,
@@ -4805,8 +4797,9 @@ def create_employee_frame(frame_7):
         fg_color="#00C957",
         text_color=("gray10", "gray90")
     )
-    view_employee_button.place(x=400, y=180)
+    view_employee_button.place(x=600, y=150)
 
+'''
     attendance_employee_button=ctk.CTkButton(
         master=frame_7,
         text="Employee Attendance",
@@ -4819,7 +4812,7 @@ def create_employee_frame(frame_7):
         text_color=("gray10", "gray90")
     )
     attendance_employee_button.place(x=700, y=180)
-
+'''
 
 class RegisterEmployeeFrame(ctk.CTkFrame):
     def __init__(self, master, **kwargs):
@@ -4827,7 +4820,7 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
 
         # STEP 1: PERSONAL INFORMATION
         # Define and configure widgets within the frame
-        label=ctk.CTkLabel(self, text="Register Employee", font=("Arial bold", 26))
+        label=ctk.CTkLabel(self, text="Regjistro punonjes", font=("Arial bold", 26))
         label.pack(pady=20, padx=10)
 
         # outer frame
@@ -4848,31 +4841,31 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         label_font=ctk.CTkFont(family="Arial bold", size=16)  # Adjust the size as
 
         # Name
-        first_name_label=ctk.CTkLabel(personal_info_frame, text="First Name:", font=label_font)
+        first_name_label=ctk.CTkLabel(personal_info_frame, text="Emer:", font=label_font)
         first_name_label.grid(row=2, column=0, padx=20, pady=5, sticky="w")
-        first_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your first name")
+        first_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Emer")
         first_name_entry.grid(row=2, column=1, padx=20, pady=5)
 
-        middle_name_label=ctk.CTkLabel(personal_info_frame, text="Middle Name:", font=label_font)
-        middle_name_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
-        middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your middle name")
-        middle_name_entry.grid(row=3, column=1, padx=20, pady=5)
+        #middle_name_label=ctk.CTkLabel(personal_info_frame, text="Mbiemer:", font=label_font)
+        #middle_name_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
+        #middle_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Mbiemer")
+        #middle_name_entry.grid(row=3, column=1, padx=20, pady=5)
 
-        last_name_label=ctk.CTkLabel(personal_info_frame, text="Last Name:", font=label_font)
+        last_name_label=ctk.CTkLabel(personal_info_frame, text="Mbiemer:", font=label_font)
         last_name_label.grid(row=4, column=0, padx=20, pady=5, sticky="w")
-        last_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your last name")
+        last_name_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Mbiemer")
         last_name_entry.grid(row=4, column=1, padx=20, pady=5)
 
         # Age
-        age_label=ctk.CTkLabel(personal_info_frame, text="Age:", font=label_font)
+        age_label=ctk.CTkLabel(personal_info_frame, text="Mosha:", font=label_font)
         age_label.grid(row=6, column=0, padx=20, pady=5, sticky="w")
-        age_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your age")
+        age_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Mosha")
         age_entry.grid(row=6, column=1, padx=20, pady=5)
 
         # Sex
-        sex_label=ctk.CTkLabel(personal_info_frame, text="Sex:", font=label_font)
+        sex_label=ctk.CTkLabel(personal_info_frame, text="Gjinia:", font=label_font)
         sex_label.grid(row=7, column=0, padx=20, pady=5, sticky="w")
-        sex_entry=ctk.CTkComboBox(personal_info_frame, values=["Male", "Female", "Other"])
+        sex_entry=ctk.CTkComboBox(personal_info_frame, values=["Mashkull", "Femer"])
         sex_entry.grid(row=7, column=1, padx=20, pady=5)
 
         # Create a DateEntry widget for the birthdate
@@ -4887,10 +4880,10 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         #self.birth_date_entry.bind("<<DateEntrySelected>>", self.calculate_age)
 
         # Address
-        address_label=ctk.CTkLabel(personal_info_frame, text="Address:", font=label_font)
-        address_label.grid(row=8, column=0, padx=20, pady=5, sticky="w")
-        address_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your address")
-        address_entry.grid(row=8, column=1, padx=20, pady=5)
+        #address_label=ctk.CTkLabel(personal_info_frame, text="Address:", font=label_font)
+        #address_label.grid(row=8, column=0, padx=20, pady=5, sticky="w")
+        #address_entry=ctk.CTkEntry(personal_info_frame, placeholder_text="Enter your address")
+        #address_entry.grid(row=8, column=1, padx=20, pady=5)
 
         second_frame=ctk.CTkFrame(widget_frames)
         second_frame.grid(row=0, column=1, padx=10, pady=10)
@@ -4901,31 +4894,31 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         label_font=ctk.CTkFont(family="Arial bold", size=16)  # Adjust the size as
 
         # Assuming you have a list of nationalities
-        nationalities_list=["Select Nationality", "Filipino", "American", "Chinese", "Japanese", "Korean", "Other"]
+        #nationalities_list=["Select Nationality", "Filipino", "American", "Chinese", "Japanese", "Korean", "Other"]
 
         # Nationality Label
-        nationality_label=ctk.CTkLabel(contact_frame, text="Nationality:", font=label_font)
-        nationality_label.pack(pady=5, padx=10, anchor="w")
+        #nationality_label=ctk.CTkLabel(contact_frame, text="Nationality:", font=label_font)
+        #nationality_label.pack(pady=5, padx=10, anchor="w")
 
         # Create a CTkComboBox widget for nationalities
-        nationality_combo=ctk.CTkComboBox(contact_frame, values=nationalities_list)
-        nationality_combo.pack(pady=5, padx=10, fill="x")
-        nationality_combo.set("Select Nationality")  # Set a default selection
+        #nationality_combo=ctk.CTkComboBox(contact_frame, values=nationalities_list)
+        #nationality_combo.pack(pady=5, padx=10, fill="x")
+        #nationality_combo.set("Select Nationality")  # Set a default selection
 
         # Contact No
-        contact_no_label=ctk.CTkLabel(contact_frame, text="Contact No:", font=label_font)
+        contact_no_label=ctk.CTkLabel(contact_frame, text="Numri i kontaktit:", font=label_font)
         contact_no_label.pack(pady=3, padx=10, anchor="w")
-        contact_no_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
+        contact_no_entry=ctk.CTkEntry(contact_frame, placeholder_text="06--------")
         contact_no_entry.pack(pady=0, padx=10, fill="x")
 
         # Emergency Contact No
-        emergency_contact_label=ctk.CTkLabel(contact_frame, text="Emergency Contact No:", font=label_font)
-        emergency_contact_label.pack(pady=0, padx=10, anchor="w")
-        emergency_contact_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
-        emergency_contact_entry.pack(pady=5, padx=10, fill="x")
+        #emergency_contact_label=ctk.CTkLabel(contact_frame, text="Emergency Contact No:", font=label_font)
+        #emergency_contact_label.pack(pady=0, padx=10, anchor="w")
+        #emergency_contact_entry=ctk.CTkEntry(contact_frame, placeholder_text="+63 9123456789")
+        #emergency_contact_entry.pack(pady=5, padx=10, fill="x")
 
         # Button to trigger photo upload
-        upload_button=ctk.CTkButton(contact_frame, text="Upload Photo", command=self.upload_employee_photo)
+        upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_employee_photo)
         upload_button.pack(pady=5, padx=10, fill="x")
 
         # Uploaded photo entry
@@ -4933,7 +4926,7 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
 
         # Create a "Register" button
-        register_button=ctk.CTkButton(outer_frame, text="Register", fg_color="Green",
+        register_button=ctk.CTkButton(outer_frame, text="Regjistro", fg_color="Green",
                                       text_color=("gray10", "gray90"),
                                       hover_color=("green3", "green4"),
                                       command=self.register_employees)
@@ -4946,14 +4939,14 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
 
         # Store the Entry fields and other widgets as instance attributes
         self.first_name_entry=first_name_entry
-        self.middle_name_entry=middle_name_entry
+        #self.middle_name_entry=middle_name_entry
         self.last_name_entry=last_name_entry
         self.age_entry=age_entry
         self.sex_entry=sex_entry
-        self.address_entry=address_entry
-        self.nationality_combo=nationality_combo
+        #self.address_entry=address_entry
+        #self.nationality_combo=nationality_combo
         self.contact_no_entry=contact_no_entry
-        self.emergency_contact_entry=emergency_contact_entry
+        #self.emergency_contact_entry=emergency_contact_entry
 
         # Create a connection to the database (or create it if it doesn't exist)
         conn=sqlite3.connect('SQLite db/register_employee.db')
@@ -4966,15 +4959,10 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
                                  CREATE TABLE IF NOT EXISTS employees (
                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
                                      first_name TEXT,
-                                     middle_name TEXT,
                                      last_name TEXT,
                                      age INTEGER,
                                      sex TEXT,
-                                     birth_date DATE,
-                                     address TEXT,
-                                     nationality TEXT,
                                      contact_no TEXT,
-                                     emergency_contact_no TEXT,
                                      status TEXT DEFAULT 'Active',
                                      photo_data BLOB
                                  )
@@ -5072,9 +5060,9 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         sex=self.sex_entry.get()
         #birth_date=self.birth_date_entry.get()
         #address=self.address_entry.get()
-        nationality=self.nationality_combo.get()
+        #nationality=self.nationality_combo.get()
         contact_no=self.contact_no_entry.get()
-        emergency_contact_no=self.emergency_contact_entry.get()
+        #emergency_contact_no=self.emergency_contact_entry.get()
 
         # Validate the data (you can add your validation logic here)
 
@@ -5103,20 +5091,18 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
 
         cursor.execute('''
                     INSERT INTO employees (
-                        first_name, middle_name, last_name, age, sex, birth_date, address,
-                        nationality, contact_no, emergency_contact_no, status, photo_data
+                        first_name, last_name, age, sex, contact_no, status, photo_data
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
                 ''', (
-            first_name, middle_name, last_name, age, sex, birth_date, address,
-            nationality, contact_no, emergency_contact_no, status, sqlite3.Binary(photo_data)))
+            first_name, last_name, age, sex, contact_no, status, sqlite3.Binary(photo_data)))
 
         # Commit the changes and close the database connection
         conn.commit()
         conn.close()
 
         # Combine all the data entries into a single string
-        data_string=f"{first_name},{middle_name},{last_name},{contact_no}"
+        data_string=f"{first_name},{last_name},{contact_no}"
 
         # Create a folder if it doesn't exist
         folder_path="templates/employee_qrcodes"
@@ -5159,7 +5145,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
         super().__init__(master, **kwargs)
 
         # Define and configure widgets within the frame
-        label=ctk.CTkLabel(self, text="Employee Information", font=("Arial bold", 28))
+        label=ctk.CTkLabel(self, text="Te dhenat e punonjeseve", font=("Arial bold", 28))
         label.pack(pady=20, padx=10)
 
         # Create frame to hold the search bar
@@ -5167,16 +5153,16 @@ class ViewEmployeeFrame(ctk.CTkFrame):
         search_frame.pack(pady=10, padx=10, fill="x")
 
         # Create a search bar
-        search_entry=ctk.CTkEntry(search_frame, placeholder_text="Enter a name to search")
+        search_entry=ctk.CTkEntry(search_frame, placeholder_text="Kerko sipas emrit")
         search_entry.pack(padx=10, pady=10, side="left", fill="both", expand=True)
 
-        clear_button=ctk.CTkButton(search_frame, text="Clear", command=lambda: self.search_entry_clear(search_entry),
+        clear_button=ctk.CTkButton(search_frame, text="Fshi", command=lambda: self.search_entry_clear(search_entry),
                                    fg_color="red",
                                    hover_color="red4", text_color=("gray10", "gray90"))
         clear_button.pack(side="right", padx=(5, 10))  # Add padding to separate the buttons
 
         # Create a search button
-        search_button=ctk.CTkButton(search_frame, text="Search", command=lambda: self.search_record(search_entry.get()))
+        search_button=ctk.CTkButton(search_frame, text="Kerko", command=lambda: self.search_record(search_entry.get()))
         search_button.pack(side="right")
 
         # Create a connection to the database
@@ -5185,7 +5171,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
 
         # Get only the specific columns from the database
         cursor.execute(
-            "SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status FROM employees")
+            "SELECT id, first_name, last_name, age, sex, contact_no, status FROM employees")
         records=cursor.fetchall()
 
         # Create a frame that holds the table
@@ -5215,7 +5201,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
 
         # Create a table to display the records
         self.table=ttk.Treeview(table_frame, columns=(
-            "ID", "First Name", "Middle Name", "Last Name", "Age", "Sex", "Contact No", "Status"), show="headings",
+            "ID", "First Name", "Last Name", "Age", "Sex", "Contact No", "Status"), show="headings",
                                 height=8)
         self.table.pack(side=tk.LEFT)
 
@@ -5227,7 +5213,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
         # Configure the columns
         self.table.heading("ID", text="ID")
         self.table.heading("First Name", text="First Name")
-        self.table.heading("Middle Name", text="Middle Name")
+        #self.table.heading("Middle Name", text="Middle Name")
         self.table.heading("Last Name", text="Last Name")
         self.table.heading("Age", text="Age")
         self.table.heading("Sex", text="Sex")
@@ -5238,7 +5224,6 @@ class ViewEmployeeFrame(ctk.CTkFrame):
         columns=[
             ("ID", "center"),
             ("First Name", "center"),
-            ("Middle Name", "center"),
             ("Last Name", "center"),
             ("Age", "center"),
             ("Sex", "center"),
@@ -5256,7 +5241,6 @@ class ViewEmployeeFrame(ctk.CTkFrame):
         columns=[
             ("ID", "50"),
             ("First Name", "200"),
-            ("Middle Name", "150"),
             ("Last Name", "200"),
             ("Age", "50"),
             ("Sex", "100"),
@@ -5280,7 +5264,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
         view_button_frame=ctk.CTkFrame(button_frames)
         view_button_frame.grid(row=0, column=1, padx=10, pady=10)
         # Create an "Edit" button in the second column
-        view_button=ctk.CTkButton(view_button_frame, text="View", command=self.edit_employee_record)
+        view_button=ctk.CTkButton(view_button_frame, text="Ndrysho", command=self.edit_employee_record)
         view_button.pack(padx=10, pady=10)
 
         # create a back button to return to the previous frame
@@ -5303,7 +5287,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
 
         # Search for records matching the search term
         cursor.execute(
-            "SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status FROM employees WHERE first_name LIKE ? OR last_name LIKE ?",
+            "SELECT id, first_name, last_name, age, sex, contact_no, status FROM employees WHERE first_name LIKE ? OR last_name LIKE ?",
             ('%' + search_term + '%', '%' + search_term + '%'))
         records=cursor.fetchall()
 
@@ -5334,7 +5318,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
 
         # Retrieve all records
         cursor.execute(
-            "SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status FROM employees")
+            "SELECT id, first_name, last_name, age, sex, contact_no, status FROM employees")
         records=cursor.fetchall()
 
         # Close the database connection
@@ -5361,8 +5345,8 @@ class EditEmployeeForm(ctk.CTkToplevel):
         super().__init__(master)
 
         # Set the title for the edit form
-        self.resizable(False, False)
-        self.title("Edit Employee Record")
+        self.resizable(True, True)
+        self.title("Ndrysho te dhenat")
         self.geometry("500x550")
 
         # Center-align the window
@@ -5388,7 +5372,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
             return
 
         # Create and configure widgets within the edit form
-        label=ctk.CTkLabel(self, text="Edit Employee Record", font=("Arial bold", 20))
+        label=ctk.CTkLabel(self, text="Ndrysho te dhenat", font=("Arial bold", 20))
         label.pack(pady=10)
 
         # Create a frame to hold edit form frames
@@ -5406,7 +5390,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
 
         change_button_frame=ctk.CTkFrame(main_frame)
         change_button_frame.pack(pady=10, padx=10)
-        change_photo_button=ctk.CTkButton(change_button_frame, text="Change Image", command=self.change_photo)
+        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
         change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
@@ -5417,8 +5401,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
         label_font=ctk.CTkFont(family="Arial", size=16, weight="bold")
 
         # Create labels and entry fields for editing the record
-        labels=["First Name:", "Middle Name:", "Last Name:", "Age:", "Sex:", "Date of Birth:", "Address:",
-                "Nationality:", "Contact No:", "Emergency Contact No:", "Status:"]
+        labels=["First Name:", "Last Name:", "Age:", "Sex:", "Contact No:", "Status:"]
         self.entry_fields=[]
         self.status_combobox=None  # Initialize status_combobox attribute
 
@@ -5441,27 +5424,27 @@ class EditEmployeeForm(ctk.CTkToplevel):
                 self.entry_fields.append(entry)
 
         # Display the qr code of the member inside the edit form
-        qr_code_frame=ctk.CTkFrame(edit_frame)
-        qr_code_frame.grid(row=17, column=1, rowspan=16, padx=10, pady=10)
+        #qr_code_frame=ctk.CTkFrame(edit_frame)
+        #qr_code_frame.grid(row=17, column=1, rowspan=16, padx=10, pady=10)
 
-        label=ctk.CTkLabel(edit_frame, text="QR Code:", font=("Arial bold", 16))
-        label.grid(row=17, column=0, padx=10, pady=10, sticky="w")
+        #label=ctk.CTkLabel(edit_frame, text="QR Code:", font=("Arial bold", 16))
+        #label.grid(row=17, column=0, padx=10, pady=10, sticky="w")
 
-        download_button_frame=ctk.CTkFrame(edit_frame)
-        download_button_frame.grid(row=50, column=1, rowspan=50, padx=10, pady=10)
+        #download_button_frame=ctk.CTkFrame(edit_frame)
+        #download_button_frame.grid(row=50, column=1, rowspan=50, padx=10, pady=10)
 
         # create a download button to download the qr code
-        download_button=ctk.CTkButton(download_button_frame, text="Download", command=self.download_qr_code)
-        download_button.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        #download_button=ctk.CTkButton(download_button_frame, text="Download", command=self.download_qr_code)
+        #download_button.grid(row=0, column=1, padx=10, pady=10, sticky="w")
 
         # Display the qr code from the member_qrcodes folder based on the last name of the member
-        qr_code_path=os.path.join("templates/employee_qrcodes", f"dgrit_employee_{self.employee_data[3]}.png")
-        qr_code_image=Image.open(qr_code_path)
-        qr_code_image=qr_code_image.resize((200, 200), Image.LANCZOS)
-        qr_code_image=ImageTk.PhotoImage(qr_code_image)
-        qr_code_label=ctk.CTkLabel(qr_code_frame, text="", image=qr_code_image)
-        qr_code_label.image=qr_code_image
-        qr_code_label.pack(pady=10, padx=10)
+        #qr_code_path=os.path.join("templates/employee_qrcodes", f"dgrit_employee_{self.employee_data[3]}.png")
+        #qr_code_image=Image.open(qr_code_path)
+        #qr_code_image=qr_code_image.resize((200, 200), Image.LANCZOS)
+        #qr_code_image=ImageTk.PhotoImage(qr_code_image)
+        #qr_code_label=ctk.CTkLabel(qr_code_frame, text="", image=qr_code_image)
+        #qr_code_label.image=qr_code_image
+        #qr_code_label.pack(pady=10, padx=10)
 
         frame_buttons=ctk.CTkFrame(main_frame)
         frame_buttons.pack(pady=10, padx=20)
@@ -5471,7 +5454,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
         update_button_frame.grid(row=0, column=0, padx=20, pady=10)
 
         # Create an "Update" button
-        update_button=ctk.CTkButton(update_button_frame, text="Update", command=self.update_record)
+        update_button=ctk.CTkButton(update_button_frame, text="Ndrysho", command=self.update_record)
         update_button.grid(row=0, column=0, padx=20, pady=5)
 
         # create a frame to hold the delete button
@@ -5479,7 +5462,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
         delete_button_frame.grid(row=0, column=1, padx=20, pady=10)
 
         # Create Red Delete button
-        delete_button=ctk.CTkButton(delete_button_frame, text="Delete", fg_color="Red",
+        delete_button=ctk.CTkButton(delete_button_frame, text="Fshi", fg_color="Red",
                                     text_color=("gray10", "gray90"),
                                     hover_color=("red3", "red4"), command=self.delete_record)
         delete_button.grid(row=0, column=0, padx=20, pady=5)
@@ -5631,6 +5614,7 @@ class EmployeeAttendanceFrame(ctk.CTkFrame):
         view_image=view_image.resize((button_width, button_height), Image.LANCZOS)
 
         # Create the buttons with the resized images
+        '''
         take_attendance_button=ctk.CTkButton(
             master=self,
             text="Take Attendance",
@@ -5643,7 +5627,7 @@ class EmployeeAttendanceFrame(ctk.CTkFrame):
             text_color=("gray10", "gray90")
         )
         take_attendance_button.place(x=300, y=150)
-
+        
         attendance_records_button=ctk.CTkButton(
             master=self,
             text="View Attendance Records",
@@ -5656,7 +5640,7 @@ class EmployeeAttendanceFrame(ctk.CTkFrame):
             text_color=("gray10", "gray90")
         )
         attendance_records_button.place(x=550, y=150)
-
+        '''
         # create a back button to return to the previous frame
         back_button=ctk.CTkButton(self, text="Mbrapa", fg_color="Red", text_color=("gray10", "gray90"),
                                   hover_color=("red3", "red4"), command=self.back_button_event)
@@ -6012,27 +5996,27 @@ def create_account_management_frame(frame_8):
     label_font=ctk.CTkFont(family="Arial bold", size=24)
 
     # Add Full Name entry
-    full_name_label=ctk.CTkLabel(sub_frame, text="Full Name:", font=label_font)
+    full_name_label=ctk.CTkLabel(sub_frame, text="Emri i plote:", font=label_font)
     full_name_label.grid(row=1, column=0, padx=20, pady=20)
-    full_name_entry=ctk.CTkEntry(sub_frame, placeholder_text="Enter your full name")
+    full_name_entry=ctk.CTkEntry(sub_frame, placeholder_text="Emri i palestres")
     full_name_entry.grid(row=1, column=1, padx=20, pady=20, sticky="ew")
 
     # Add Contact Number entry
-    contact_no_label=ctk.CTkLabel(sub_frame, text="Contact No:", font=label_font)
+    contact_no_label=ctk.CTkLabel(sub_frame, text="Numri i konatktit:", font=label_font)
     contact_no_label.grid(row=2, column=0, padx=20, pady=20)
-    contact_no_entry=ctk.CTkEntry(sub_frame, placeholder_text="Enter your contact number")
+    contact_no_entry=ctk.CTkEntry(sub_frame, placeholder_text="Numri i konatktit")
     contact_no_entry.grid(row=2, column=1, padx=20, pady=20, sticky="ew")
 
     # Add Username entry
     username_label=ctk.CTkLabel(sub_frame, text="Username:", font=label_font)
     username_label.grid(row=3, column=0, padx=20, pady=20)
-    username_entry=ctk.CTkEntry(sub_frame, placeholder_text="Enter your new username")
+    username_entry=ctk.CTkEntry(sub_frame, placeholder_text="Username")
     username_entry.grid(row=3, column=1, padx=20, pady=20, sticky="ew")
 
     # Add Password entry
     password_label=ctk.CTkLabel(sub_frame, text="Password:", font=label_font)
     password_label.grid(row=4, column=0, padx=20, pady=20)
-    password_entry=ctk.CTkEntry(sub_frame, placeholder_text='Enter your new password', show="*")
+    password_entry=ctk.CTkEntry(sub_frame, placeholder_text='Password', show="*")
     password_entry.grid(row=4, column=1, padx=20, pady=20, sticky="ew")
 
     register_button=ctk.CTkButton(
@@ -6061,9 +6045,9 @@ def register(full_name, contact_no, username, password, contact_no_entry, full_n
         return
 
     # Validate the contact number format (11 digits starting with 0)
-    if not (contact_no.startswith('0') and len(contact_no) == 11 and contact_no[1:].isdigit()):
+    if not (contact_no.startswith('0') and len(contact_no) == 10 and contact_no[1:].isdigit()):
         messagebox.showerror("Invalid Contact Number",
-                             "Please enter a valid contact number starting with 0 and 11 digits long (e.g., 09123456789).")
+                             "Please enter a valid contact number starting with 0 and 10 digits long (e.g., 0693365479).")
         return
 
     # Connect to SQLite database
