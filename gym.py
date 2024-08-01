@@ -2149,9 +2149,9 @@ class ScanFrame(ctk.CTkFrame):
 
                 if attendance_type == "Time In":
                     cursor_attendance.execute('''
-                        INSERT INTO attendance_records (first_name, middle_name, last_name, contact_no, subscription_id, time_in)
-                        VALUES (?, ?, ?, ?, ?, ?)
-                    ''', (first_name, middle_name, last_name, contact_no, subscription_id, current_datetime))
+                        INSERT INTO attendance_records (first_name,  last_name, contact_no, subscription_id, time_in)
+                        VALUES (?, ?, ?, ?, ?)
+                    ''', (first_name, last_name, contact_no, subscription_id, current_datetime))
 
                     self.send_sms(contact_no,
                                   f"Hello {first_name}!, You have Successfully Time In. Subscription ID:{subscription_id}. Time In: {current_datetime}, - D'GRIT GYM")
@@ -2247,7 +2247,7 @@ class ScanFrame(ctk.CTkFrame):
         label_font=("Arial Bold", 16)
 
         # Labels and corresponding entries
-        label_texts=["First Name:", "Last Name:", "Contact No:", "Subscription ID:"]
+        label_texts=["Emri:", "Mbiemri:", "Numri i kontaktit:", "Anetaresimi ID:"]
         entry_contents=member_data_fields[:5]
 
         for i, label_text in enumerate(label_texts):
@@ -2318,7 +2318,7 @@ class RecordsFrame(ctk.CTkFrame):
 
         # Create a Treeview widget to display the attendance records
         self.records_table=ttk.Treeview(table_frame, columns=(
-            "First Name", "M.I", "Last Name", "Contact No", "Subscription ID", "Time In", "Time Out"),
+            "Emri", "Mbiemri", "Numri i kontaktit", "Anetaresimi ID", "Time In", "Time Out"),
                                         show="headings", height=10)
         self.records_table.pack(padx=10, pady=10, side=tk.LEFT)
 
@@ -3711,7 +3711,7 @@ class EditTrainerForm(ctk.CTkToplevel):
                 status_values=["Active", "Inactive", "On Leave"]
                 self.status_combobox=ctk.CTkComboBox(edit_frame, values=status_values)
                 self.status_combobox.grid(row=i, column=1, padx=10, pady=5, ipadx=10, ipady=3)
-                self.status_combobox.set(self.trainer_data[11])
+                self.status_combobox.set(self.trainer_data[6])
 
                 self.entry_fields.append(self.status_combobox)
             else:
@@ -3744,25 +3744,25 @@ class EditTrainerForm(ctk.CTkToplevel):
         #qr_code_label.pack(pady=10, padx=10)
 
         frame_buttons=ctk.CTkFrame(main_frame)
-        frame_buttons.pack(pady=10, padx=20)
+        frame_buttons.pack(pady=5, padx=10)
 
         # create frame to hold the buttons
         update_button_frame=ctk.CTkFrame(frame_buttons)
-        update_button_frame.grid(row=0, column=0, padx=20, pady=10)
+        update_button_frame.grid(row=0, column=0, padx=10, pady=5)
 
         # Create an "Update" button
         update_button=ctk.CTkButton(update_button_frame, text="Ndrysho", command=self.update_record)
-        update_button.grid(row=0, column=0, padx=20, pady=5)
+        update_button.grid(row=0, column=0, padx=10, pady=5)
 
         # create a frame to hold the delete button
         delete_button_frame=ctk.CTkFrame(frame_buttons)
-        delete_button_frame.grid(row=0, column=1, padx=20, pady=10)
+        delete_button_frame.grid(row=0, column=1, padx=10, pady=5)
 
         # Create Red Delete button
         delete_button=ctk.CTkButton(delete_button_frame, text="Fshi", fg_color="Red",
                                     text_color=("gray10", "gray90"),
                                     hover_color=("red3", "red4"), command=self.delete_record)
-        delete_button.grid(row=0, column=0, padx=20, pady=5)
+        delete_button.grid(row=0, column=0, padx=10, pady=5)
 
         # Store the reference to the 'table' in EditForm
         self.table=table_reference
@@ -3819,7 +3819,7 @@ class EditTrainerForm(ctk.CTkToplevel):
     def update_record(self):
         # Get the updated data from the entry fields, including the status
         updated_data=[entry.get() if label_text != "Status:" else self.status_combobox.get() for label_text, entry in
-                      zip(["First Name:", "Last Name:", "Age:", "Sex:",  "Contact No:", "Status:"],
+                      zip(["Emri:", "Mbiemri:", "Mosha:", "Gjinia:",  "Numri i kontaktit:", "Status:"],
                           self.entry_fields)]
 
         # Validate the updated data
@@ -5392,7 +5392,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
         label_font=ctk.CTkFont(family="Arial", size=16, weight="bold")
 
         # Create labels and entry fields for editing the record
-        labels=["First Name:", "Last Name:", "Age:", "Sex:", "Contact No:", "Status:"]
+        labels=["Emri:", "Mbiemri:", "Mosha:", "Gjinia:", "Numri i kontaktit:", "Status:"]
         self.entry_fields=[]
         self.status_combobox=None  # Initialize status_combobox attribute
 
@@ -5405,7 +5405,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
                 status_values=["Active", "Inactive", "On Leave"]
                 self.status_combobox=ctk.CTkComboBox(edit_frame, values=status_values)
                 self.status_combobox.grid(row=i, column=1, padx=10, pady=5, ipadx=10, ipady=3)
-                self.status_combobox.set(self.employee_data[11])
+                self.status_combobox.set(self.employee_data[6])
 
                 self.entry_fields.append(self.status_combobox)
             else:
@@ -5503,7 +5503,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
         # Fetch the updated records from the database
         conn=sqlite3.connect('SQLite db/register_employee.db')
         cursor=conn.cursor()
-        cursor.execute("SELECT id, first_name, middle_name, last_name, age, sex, contact_no, status FROM employees")
+        cursor.execute("SELECT id, first_name, last_name, age, sex, contact_no, status FROM employees")
         records=cursor.fetchall()
 
         # Add the updated records to the Treeview
@@ -5517,8 +5517,7 @@ class EditEmployeeForm(ctk.CTkToplevel):
     def update_record(self):
         # Get the updated data from the entry fields, including the status
         updated_data=[entry.get() if label_text != "Status:" else self.status_combobox.get() for label_text, entry in
-                      zip(["First Name:", "Middle Name:", "Last Name:", "Age:", "Sex:", "Date of Birth:", "Address:",
-                           "Nationality:", "Contact No:", "Emergency Contact No:", "Status:"],
+                      zip(["Emri:",  "Mbiemri:", "Mosha:", "Gjinia:", "Numri i kontaktit:", "Status:"],
                           self.entry_fields)]
 
         # Validate the updated data
@@ -5532,8 +5531,8 @@ class EditEmployeeForm(ctk.CTkToplevel):
                 cursor=conn.cursor()
                 cursor.execute('''
                     UPDATE employees SET 
-                    first_name=?, middle_name=?, last_name=?, age=?, sex=?, birth_date=?, address=?, nationality=?,
-                    contact_no=?, emergency_contact_no=?, status=?
+                    first_name=?, last_name=?, age=?, sex=?,
+                    contact_no=?, status=?
                     WHERE id=?
                 ''', tuple(updated_data + [self.employee_data[0]]))
 
@@ -5753,7 +5752,7 @@ class EmployeeScanQrFrame(ctk.CTkFrame):
     @staticmethod
     def record_attendance(member_data, attendance_type):
         try:
-            first_name, middle_name, last_name, contact_no=member_data.split(',')
+            first_name, last_name, contact_no=member_data.split(',')
             current_datetime=datetime.now().strftime("%Y-%m-%d %I:%M:%S %p")
 
             with sqlite3.connect('SQLite db/register_employee.db') as conn:
@@ -5772,9 +5771,9 @@ class EmployeeScanQrFrame(ctk.CTkFrame):
 
                         if attendance_type == "Time In":
                             attendance_cursor.execute('''
-                                   INSERT INTO employee_attendance (first_name, middle_name, last_name, contact_no, time_in)
-                                   VALUES (?, ?, ?, ?, ?)
-                               ''', (first_name, middle_name, last_name, contact_no, current_datetime))
+                                   INSERT INTO employee_attendance (first_name, last_name, contact_no, time_in)
+                                   VALUES (?, ?, ?, ?)
+                               ''', (first_name, last_name, contact_no, current_datetime))
                             send_sms(contact_no,
                                      f"Hello {first_name}!, You have Successfully Time In. Time In: {current_datetime}, - D'GRIT GYM")
 
@@ -5869,7 +5868,7 @@ class RecordsAttendanceFrame(ctk.CTkFrame):
 
         # Create a Treeview widget to display the attendance records
         self.records_table=ttk.Treeview(inner_table_frame, columns=(
-            "First Name", "Middle Name", "Last Name", "Contact No", "Time In", "Time Out"),
+            "Emri", "Mbiemri", "Numri i kontaktit", "Time In", "Time Out"),
                                         show="headings", height=10)
         self.records_table.pack(side=tk.LEFT)
 
@@ -5927,7 +5926,6 @@ class RecordsAttendanceFrame(ctk.CTkFrame):
                    CREATE TABLE IF NOT EXISTS employee_attendance (
                        id INTEGER PRIMARY KEY,
                        first_name TEXT,
-                       middle_name TEXT,
                        last_name TEXT,
                        contact_no TEXT,
                        time_in TEXT,
