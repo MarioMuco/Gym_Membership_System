@@ -526,34 +526,32 @@ def create_home_frame(home):
     get_gym_equipment_count()
 
     # -------------------FRAME 1 ----------------------#
-    '''
-    graph_frame=ctk.CTkFrame(dashboard_frame)
-    graph_frame.pack(pady=5, padx=10, fill="both", expand=True)
+    #graph_frame=ctk.CTkFrame(dashboard_frame)
+    #graph_frame.pack(pady=5, padx=10, fill="both", expand=True)
 
     # Monthly Income Report Graph
-    income_frame=ctk.CTkFrame(graph_frame)
-    income_frame.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
+    #income_frame=ctk.CTkFrame(graph_frame)
+    #income_frame.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
     # Create a small rectangular label for the income report
-    income_label=ctk.CTkLabel(income_frame, text="Te ardhurat mujore nga anetarsimi (ALL)", font=("Arial bold", 16))
-    income_label.pack(pady=5, padx=10, anchor="w")
+    #income_label=ctk.CTkLabel(income_frame, text="Te ardhurat mujore nga anetarsimi (ALL)", font=("Arial bold", 16))
+    #income_label.pack(pady=5, padx=10, anchor="w")
 
     # Create a figure and axis for the income report graph
-    fig, ax=plt.subplots(figsize=(7, 4), dpi=100)
-    canvas=FigureCanvasTkAgg(fig, master=income_frame)
-    canvas_widget=canvas.get_tk_widget()
-    canvas_widget.pack(fill="both", expand=True)
+    #fig, ax=plt.subplots(figsize=(7, 4), dpi=100)
+    #canvas=FigureCanvasTkAgg(fig, master=income_frame)
+    #canvas_widget=canvas.get_tk_widget()
+    #canvas_widget.pack(fill="both", expand=True)
 
     # Update the income report graph
-    update_income_report(home, ax, canvas)
-    canvas.draw()
-    '''
+    #update_income_report(home, ax, canvas)
+    #canvas.draw()
 
     # Make the rows and columns resizable
-    for i in range(5):
-        panel_frame.grid_columnconfigure(i, weight=1)
+    #for i in range(5):
+    #    panel_frame.grid_columnconfigure(i, weight=1)
 
-    panel_frame.grid_rowconfigure(0, weight=1)
+    #panel_frame.grid_rowconfigure(0, weight=1)
 
     # ------------FRAME 2----------------------#
     #graph_frame2=ctk.CTkFrame(graph_frame)
@@ -891,12 +889,12 @@ class RegistrationFrame(ctk.CTkFrame):
         self.subscription_plan_entry.bind("<<ComboboxSelected>>", self.update_dates_on_subscription_change)
 
         # Button to trigger photo upload
-        #upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
-        #upload_button.grid(row=3, column=0, padx=20, pady=10, sticky="w")
+        upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
+        upload_button.grid(row=3, column=0, padx=20, pady=10, sticky="w")
 
         # Uploaded photo entry
-        #self.uploaded_photo_entry=ctk.CTkEntry(subscription_frame, placeholder_text=".png/.jpg/etj")
-        #self.uploaded_photo_entry.grid(row=3, column=1, padx=20, pady=10)
+        self.uploaded_photo_entry=ctk.CTkEntry(subscription_frame, placeholder_text=".png/.jpg/etj")
+        self.uploaded_photo_entry.grid(row=3, column=1, padx=20, pady=10)
 
         # Reference to the user who owns the subscription
         #user_reference_label=ctk.CTkLabel(subscription_frame, text="User Reference:", font=label_font)
@@ -948,7 +946,8 @@ class RegistrationFrame(ctk.CTkFrame):
                        subscription_plan TEXT,
                        start_date DATE,
                        end_date DATE,
-                       status TEXT DEFAULT 'Ongoing'
+                       status TEXT DEFAULT 'Ongoing',
+                       photo_data BLOB
                    )
                ''')
 
@@ -1019,13 +1018,13 @@ class RegistrationFrame(ctk.CTkFrame):
         # Calculate start and end dates based on the selected subscription plan
         current_date=datetime.now()
 
-        if subscription_plan == "Weekly":
+        if subscription_plan == "Javor":
             start_date=current_date
             end_date=start_date + timedelta(days=7)
-        elif subscription_plan == "Monthly":
+        elif subscription_plan == "Mujor":
             start_date=current_date
             end_date=start_date + timedelta(weeks=4)
-        elif subscription_plan == "Yearly":
+        elif subscription_plan == "Vjetor":
             start_date=current_date
             end_date=start_date + timedelta(weeks=52)
         else:
@@ -1106,7 +1105,8 @@ class RegistrationFrame(ctk.CTkFrame):
         #user_reference=self.user_reference_entry.get()
 
         # Validate the data
-        if not (first_name and last_name and age and sex and contact_no and
+        if not (first_name and last_name and age and sex and
+               contact_no and
                 subscription_plan):
             messagebox.showerror("Validation Error", "All fields are required.")
             return
@@ -1133,11 +1133,11 @@ class RegistrationFrame(ctk.CTkFrame):
         cursor=conn.cursor()
 
         # Calculate the expiration date based on the subscription plan
-        if subscription_plan == "Weekly":
+        if subscription_plan == "Javor":
             duration=timedelta(days=7)
-        elif subscription_plan == "Monthly":
+        elif subscription_plan == "Mujor":
             duration=timedelta(weeks=4)  # Assuming 4 weeks in a month for simplicity
-        elif subscription_plan == "Yearly":
+        elif subscription_plan == "Vjetor":
             duration=timedelta(weeks=52)  # Assuming 52 weeks in a year for simplicity
         else:
             messagebox.showerror("Validation Error", "Invalid subscription plan.")
@@ -1151,17 +1151,19 @@ class RegistrationFrame(ctk.CTkFrame):
         end_date_str=end_date.strftime('%Y-%m-%d')
 
         # Read the binary data of the photo from the member_profile directory
-        #photo_file_name=self.uploaded_photo_entry.get()
-        #photo_file_path=os.path.join("templates/member_profile", photo_file_name)
-        #with open(photo_file_path, 'rb') as file:
-        #    photo_data=file.read()
+        #self.uploaded_photo_entry.get()
+        photo_file_name= "avatar.png"
+        photo_file_path=os.path.join("templates/member_profile", photo_file_name)
+        with open(photo_file_path, 'rb') as file:
+            photo_data=file.read()
 
         # Insert the data into the database
         cursor.execute('''
-           INSERT INTO registration (first_name, last_name, age, sex, contact_no, subscription_id,
-                                   subscription_plan, start_date, end_date)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (first_name,last_name, age, sex, contact_no, subscription_id, subscription_plan, start_date_str, end_date_str))
+           INSERT INTO registration (first_name, last_name, age, sex, contact_no,  subscription_id,
+                                   subscription_plan, start_date, end_date, photo_data)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (first_name,last_name, age, sex, contact_no,
+              subscription_id, subscription_plan, start_date_str, end_date_str, sqlite3.Binary(photo_data)))
 
         # Commit the changes and close the database connection
         conn.commit()
@@ -1463,18 +1465,18 @@ class EditForm(ctk.CTkToplevel):
         main_frame.pack(fill="both", expand=True)
 
         # Display the photo stored as BLOB data
-        #photo_blob=self.member_data[-1]  # Assuming the photo is stored in the last column
-        #photo=Image.open(io.BytesIO(photo_blob))
-        #photo=photo.resize((150, 150), Image.LANCZOS)
-        #photo=ImageTk.PhotoImage(photo)
-        #photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
-        #photo_label.image=photo
-        #photo_label.pack(pady=10, padx=10)
+        photo_blob=self.member_data[-1]  # Assuming the photo is stored in the last column
+        photo=Image.open(io.BytesIO(photo_blob))
+        photo=photo.resize((150, 150), Image.LANCZOS)
+        photo=ImageTk.PhotoImage(photo)
+        photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
+        photo_label.image=photo
+        photo_label.pack(pady=10, padx=10)
 
-        #change_button_frame=ctk.CTkFrame(main_frame)
-        #change_button_frame.pack(pady=5, padx=10)
-        #change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
-        #change_photo_button.pack(pady=5, padx=10)
+        change_button_frame=ctk.CTkFrame(main_frame)
+        change_button_frame.pack(pady=5, padx=10)
+        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
+        change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
         edit_frame=ctk.CTkScrollableFrame(main_frame, width=450, height=200)
@@ -1544,14 +1546,14 @@ class EditForm(ctk.CTkToplevel):
         delete_button.grid(row=0, column=0, padx=10, pady=5)
 
         # renew button
-        renew_button_frame=ctk.CTkFrame(main_frame)
-        renew_button_frame.pack(pady=5, padx=10)
+        #renew_button_frame=ctk.CTkFrame(main_frame)
+        #renew_button_frame.pack(pady=5, padx=10)
 
         # Create a "Renew" button blue
-        renew_button=ctk.CTkButton(renew_button_frame, text="Rinovo", fg_color="Blue",
-                                   text_color=("gray10", "gray90"),
-                                   hover_color=("blue3", "blue4"), command=self.renew_membership)
-        renew_button.pack(pady=5, padx=10)
+        #renew_button=ctk.CTkButton(renew_button_frame, text="Rinovo", fg_color="Blue",
+        #                           text_color=("gray10", "gray90"),
+        #                           hover_color=("blue3", "blue4"), command=self.renew_membership)
+        #renew_button.pack(pady=5, padx=10)
 
         # Store the reference to the 'table' in EditForm
         self.table=table_reference
@@ -1658,10 +1660,10 @@ class EditForm(ctk.CTkToplevel):
             ''', (*updated_data, self.member_data[0]))
 
             # Print the updated end_date to check if it's changed
-            print(f"Ndryshuar ne end_date: {updated_data[14]}")
+            print(f"Ndryshuar ne end_date: {updated_data[8]}")
 
             # If end_date is set to the expiration day, update status to "Expired"
-            end_date=datetime.strptime(updated_data[14], '%Y-%m-%d').date()
+            end_date=datetime.strptime(updated_data[8], '%Y-%m-%d').date()
             current_date=datetime.now().date()
 
             # Check if the end_date is 3 days from the current date
@@ -1777,7 +1779,7 @@ class RenewSubscriptionFrame(ctk.CTkToplevel):
 
         # Set the title for the edit form
         self.resizable(True, True)
-        self.title("Membership Renewal")
+        self.title("Rinovim anetaresimi")
         self.geometry("500x500")
 
         # Center-align the window
@@ -1790,7 +1792,7 @@ class RenewSubscriptionFrame(ctk.CTkToplevel):
         self.geometry(f"+{x}+{y}")
 
         # Create and configure widgets within the edit form
-        label=ctk.CTkLabel(self, text="Renew Membership", font=("Arial bold", 20))
+        label=ctk.CTkLabel(self, text="Rinovo Abonimin", font=("Arial bold", 20))
         label.pack(pady=10)
 
         # Create a frame to hold edit form frames
@@ -1805,7 +1807,7 @@ class RenewSubscriptionFrame(ctk.CTkToplevel):
         label_font=ctk.CTkFont(family="Arial", size=16, weight="bold")
 
         # Create labels and entry fields for editing the record
-        labels=["ID:", "Contact No:", "Subscription ID:", "Subscription Plan:", "Start Date:", "End Date:"]
+        labels=["ID:", "Numri i kontaktit:", "Anetaresimi ID:", "Lloji i abonimit:", "Fillimi:", "Mbarimi:"]
         self.entry_fields=[]
 
         # Create a connection to the database
@@ -1835,13 +1837,13 @@ class RenewSubscriptionFrame(ctk.CTkToplevel):
         self.table=table_reference
 
         # Add label and entry for Renew button
-        renew_button_frame=ctk.CTkFrame(main_frame)
-        renew_button_frame.pack(pady=10, padx=10)
+        #renew_button_frame=ctk.CTkFrame(main_frame)
+        #renew_button_frame.pack(pady=10, padx=10)
 
-        renew_button=ctk.CTkButton(renew_button_frame, text="Renew", fg_color="Blue",
-                                   text_color=("gray10", "gray90"),
-                                   hover_color=("blue3", "blue4"), command=self.renew_membership)
-        renew_button.pack(pady=10, padx=10)
+        #renew_button=ctk.CTkButton(renew_button_frame, text="Rinovo", fg_color="Blue",
+        #                           text_color=("gray10", "gray90"),
+        #                           hover_color=("blue3", "blue4"), command=self.renew_membership)
+        #renew_button.pack(pady=10, padx=10)
 
     def renew_membership(self):
         # Gather data from the form fields
@@ -1893,7 +1895,7 @@ class RenewSubscriptionFrame(ctk.CTkToplevel):
 
             # Fetch the updated data from the database
             cursor.execute(
-                "SELECT id, first_name, middle_name, last_name, contact_no, subscription_id, start_date, end_date, status FROM registration")
+                "SELECT id, first_name, last_name, contact_no, subscription_id, start_date, end_date, status FROM registration")
             updated_records=cursor.fetchall()
 
             # Clear the existing table data
@@ -2649,7 +2651,7 @@ class RegistrationEquipment(ctk.CTkFrame):
         cursor.execute('''
                        INSERT INTO equipment (equipment_name, equipment_brand, equipment_model, equipment_serial_number, 
                        equipment_quantity, equipment_condition, equipment_type)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                       VALUES (?, ?, ?, ?, ?, ?, ?)
                    ''', (equipment_name, equipment_brand, equipment_model, equipment_serial_number, equipment_quantity,
                          equipment_condition, equipment_type))
 
@@ -2790,7 +2792,7 @@ class EquipmentRecords(ctk.CTkFrame):
         # create a back button to return to the previous frame
         back_button=ctk.CTkButton(self, text="Mbrapa", fg_color="Red", text_color=("gray10", "gray90"),
                                   hover_color=("red3", "red4"), command=self.back_button_event)
-        back_button.place(x=450, y=550)
+        back_button.pack(pady=5, side=tk.TOP)
 
     def back_button_event(self):
         # Switch back to the previous frame (e.g., the gym membership frame)
@@ -3210,12 +3212,12 @@ class TrainerFrame(ctk.CTkFrame):
         #emergency_contact_entry.pack(pady=10, padx=10, fill="x")
 
         # Button to trigger photo upload
-        #upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_trainer_photo)
-        #upload_button.pack(pady=5, padx=10, fill="x")
+        upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_trainer_photo)
+        upload_button.pack(pady=5, padx=10, fill="x")
 
         # Uploaded photo entry
-        #self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etj")
-        #self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
+        self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etj")
+        self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
 
         # Create a "Register" button
         register_button=ctk.CTkButton(outer_frame, text="Regjistro", fg_color="Green",
@@ -3255,7 +3257,8 @@ class TrainerFrame(ctk.CTkFrame):
                        age INTEGER,
                        sex TEXT,
                        contact_no TEXT,
-                       status TEXT DEFAULT 'Active'
+                       status TEXT DEFAULT 'Active',
+                       photo_data BLOB
                    )
                ''')
 
@@ -3376,16 +3379,17 @@ class TrainerFrame(ctk.CTkFrame):
         status='Active'
 
         # Read the binary data of the photo from the member_profile directory
-        photo_file_name=self.uploaded_photo_entry.get()
+        #self.uploaded_photo_entry.get()
+        photo_file_name= "avatar.png"
         photo_file_path=os.path.join("templates/trainer_profile", photo_file_name)
         with open(photo_file_path, 'rb') as file:
             photo_data=file.read()
 
         cursor.execute('''
             INSERT INTO trainer (
-                first_name, last_name, age, sex, contact_no, status
+                first_name, last_name, age, sex, contact_no, status, photo_data
             )
-            VALUES (?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', (
             first_name, last_name, age, sex, contact_no, status, sqlite3.Binary(photo_data)))
 
@@ -3673,18 +3677,18 @@ class EditTrainerForm(ctk.CTkToplevel):
         main_frame.pack(fill="both", expand=True)
 
         # Display the photo stored as BLOB data
-        #photo_blob=self.trainer_data[-1]  # Assuming the photo is stored in the last column
-        #photo=Image.open(io.BytesIO(photo_blob))
-        #photo=photo.resize((150, 150), Image.LANCZOS)
-        #photo=ImageTk.PhotoImage(photo)
-        #photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
-        #photo_label.image=photo
-        #photo_label.pack(pady=5, padx=10)
+        photo_blob=self.trainer_data[-1]  # Assuming the photo is stored in the last column
+        photo=Image.open(io.BytesIO(photo_blob))
+        photo=photo.resize((150, 150), Image.LANCZOS)
+        photo=ImageTk.PhotoImage(photo)
+        photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
+        photo_label.image=photo
+        photo_label.pack(pady=5, padx=10)
 
-        #change_button_frame=ctk.CTkFrame(main_frame)
-        #change_button_frame.pack(pady=10, padx=10)
-        #change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
-        #change_photo_button.pack(pady=5, padx=10)
+        change_button_frame=ctk.CTkFrame(main_frame)
+        change_button_frame.pack(pady=10, padx=10)
+        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
+        change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
         edit_frame=ctk.CTkScrollableFrame(main_frame, width=450, height=200)
@@ -4904,12 +4908,12 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         #emergency_contact_entry.pack(pady=5, padx=10, fill="x")
 
         # Button to trigger photo upload
-        #upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_employee_photo)
-        #upload_button.pack(pady=5, padx=10, fill="x")
+        upload_button=ctk.CTkButton(contact_frame, text="Foto", command=self.upload_employee_photo)
+        upload_button.pack(pady=5, padx=10, fill="x")
 
         # Uploaded photo entry
-        #self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etc")
-        #self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
+        self.uploaded_photo_entry=ctk.CTkEntry(contact_frame, placeholder_text=".png/.jpg/etc")
+        self.uploaded_photo_entry.pack(pady=5, padx=10, fill="x")
 
         # Create a "Register" button
         register_button=ctk.CTkButton(outer_frame, text="Regjistro", fg_color="Green",
@@ -5070,7 +5074,8 @@ class RegisterEmployeeFrame(ctk.CTkFrame):
         status='Active'
 
         # Read the binary data of the photo from the member_profile directory
-        photo_file_name=self.uploaded_photo_entry.get()
+        #self.uploaded_photo_entry.get()
+        photo_file_name="avatar.png"
         photo_file_path=os.path.join("templates/employee_profile", photo_file_name)
         with open(photo_file_path, 'rb') as file:
             photo_data=file.read()
@@ -5366,18 +5371,18 @@ class EditEmployeeForm(ctk.CTkToplevel):
         main_frame.pack(fill="both", expand=True)
 
         # Display the photo stored as BLOB data
-        #photo_blob=self.employee_data[-1]  # Assuming the photo is stored in the last column
-        #photo=Image.open(io.BytesIO(photo_blob))
-        #photo=photo.resize((150, 150), Image.LANCZOS)
-        #photo=ImageTk.PhotoImage(photo)
-        #photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
-        #photo_label.image=photo
-        #photo_label.pack(pady=5, padx=10)
+        photo_blob=self.employee_data[-1]  # Assuming the photo is stored in the last column
+        photo=Image.open(io.BytesIO(photo_blob))
+        photo=photo.resize((150, 150), Image.LANCZOS)
+        photo=ImageTk.PhotoImage(photo)
+        photo_label=ctk.CTkLabel(main_frame, text="", image=photo)
+        photo_label.image=photo
+        photo_label.pack(pady=5, padx=10)
 
-        #change_button_frame=ctk.CTkFrame(main_frame)
-        #change_button_frame.pack(pady=10, padx=10)
-        #change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
-        #change_photo_button.pack(pady=5, padx=10)
+        change_button_frame=ctk.CTkFrame(main_frame)
+        change_button_frame.pack(pady=10, padx=10)
+        change_photo_button=ctk.CTkButton(change_button_frame, text="Ndrysho foton", command=self.change_photo)
+        change_photo_button.pack(pady=5, padx=10)
 
         # Create a frame to hold the form fields with custom width and height
         edit_frame=ctk.CTkScrollableFrame(main_frame, width=450, height=200)
@@ -6191,7 +6196,7 @@ def forgot_password():
                 break
         else:
             messagebox.showerror('Invalid Phone Number',
-                                 'Please enter a valid phone number starting with 0 and 11 digits long (e.g., 09123456789).')
+                                 'Please enter a valid phone number starting with 0 and 10 digits long (e.g., 09123456789).')
 
 
 # Create the login system

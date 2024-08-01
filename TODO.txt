@@ -1,17 +1,10 @@
-3048
-
-
 convert.exe
-abonim ditor
-abonim disa mujor
-si llogaritet incomi
-nese expired te dali i kuq te lisat
-edit njesoj si te pajisjet
-sun plan check is english
-edit info e te rinjve broken
+logoja e appit
+Krijo adrese - fshije ne production
 
-check_date
-create_gym_membership_frame - lloji i anetaresimi duhet edhe disa muaj
-update_dates_on_subscription_change
-hiqe create new ne publication
+dashboard fix style
+abonim disa mujor - renew per tani
+e kuqe nese expired
 
+trajneret nuk kan butona update - ndrysho ne shqip capitals ne kod
+e njejta me employee
