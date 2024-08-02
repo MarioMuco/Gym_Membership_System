@@ -5,14 +5,11 @@ streamline operations, and improve gym member management. The system includes a 
 this creative system may provide timely attendance notifications, automate duties, and communicate with gym members via SMS, reminders for gym membership 
 plans,and analytics. Reduced operating costs, better communication, more satisfaction among members, improved security of information. 
 
-1. Attendance Management with SMS Support
-2. Account Management
-3. Membership Management with renewal(1-month only)
-4. Employee Management
-5. Trainer Management
-6. Equipment Inventory
-7. Payment Monitoring(Dashboard)
-8. Integrate QR code attendance with SMS support
+1. Account Management
+2. Membership Management with renewal(1-month only)
+3. Employee Management
+4. Trainer Management
+5. Equipment Inventory
 
 # Requirements For Installation
 - pip install -r Requirements.txt
@@ -28,3 +25,5 @@ plans,and analytics. Reduced operating costs, better communication, more satisfa
   - When the end_date is reached, the status of the member will automatically expire and the qr code will be denied in the qr attendance.
   - If the status of the trainer and employee is inactive, the qr attendance will deny the qr code.
   - Press Q to close the scanner.
+ 
+ ![1](https://github.com/user-attachments/assets/60de062c-7d55-46ed-94f0-2cd6c9c0ef91)
