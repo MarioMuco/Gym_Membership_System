@@ -2,9 +2,6 @@ convert.exe
 logoja e appit
 Krijo adrese - fshije ne production
 
-dashboard fix style
-abonim disa mujor - renew per tani
-e kuqe nese expired
 
-trajneret nuk kan butona update - ndrysho ne shqip capitals ne kod
-e njejta me employee
+dashboard fix style
+abonim disa mujor  shumezo me vleren e marr

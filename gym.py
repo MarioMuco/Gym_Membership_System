@@ -25,10 +25,8 @@ from tkinter import filedialog, PhotoImage
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("green")
 
-
 def change_appearance_mode_event(new_appearance_mode):
     ctk.set_appearance_mode(new_appearance_mode)
-
 
 def send_sms_notification(to_phone_number, message):
     print("PHONE NUMBER", to_phone_number)
@@ -62,7 +60,6 @@ def send_sms_notification(to_phone_number, message):
     except Exception as e:
         print("Failed to send message", e)
 
-
 def check_date():
     current_date=datetime.now()
 
@@ -88,7 +85,6 @@ def check_date():
             #sms_message="Your gym membership has expired. Renew your subscription to continue accessing D'GRIT GYM."
             #send_sms_notification(contact_no, sms_message)
 
-
 # create a function that sends sms for 3 days before expiration
 def send_sms_for_expiration():
     current_date=datetime.now()
@@ -111,7 +107,6 @@ def send_sms_for_expiration():
             # Send SMS to the member
             sms_message="Your gym membership will expire in 3 days. Renew your subscription to continue accessing D'GRIT GYM."
             send_sms_notification(contact_no, sms_message)
-
 
 # MAIN APPLICATION
 class MainApp(ctk.CTk):
@@ -137,7 +132,7 @@ class MainApp(ctk.CTk):
         # Set grid layout 1x2
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
-
+        
         # load images with light and dark mode image
         image_path=os.path.join(os.path.dirname(os.path.realpath(__file__)), "templates/test_images")
         self.logo_image=ctk.CTkImage(
@@ -201,13 +196,14 @@ class MainApp(ctk.CTk):
             image=self.add_user_image, anchor="w", command=self.frame_2_button_event)
         self.frame_2_button.grid(row=2, column=0, sticky="ew")
 
+#TODO:
         #self.frame_3_button=ctk.CTkButton(
         #    self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
         #    text="Take Attendance",
         #    fg_color="transparent", text_color=("gray10", "gray90"),
         #    hover_color=("gray70", "gray30"),
         #    image=self.attendance_image, anchor="w", command=self.frame_3_button_event)
-        #self.frame_3_button.grid(row=3, column=0, sticky="ew")
+        #self.frame_3_button.grid(row=10, column=0, sticky="ew")
 
         self.frame_4_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
@@ -231,7 +227,7 @@ class MainApp(ctk.CTk):
         #    fg_color="transparent", text_color=("gray10", "gray90"),
         #    hover_color=("gray70", "gray30"),
         #    image=self.visitor_image, anchor="w", command=self.frame_6_button_event)
-        #self.frame_6_button.grid(row=6, column=0, sticky="ew")
+        #self.frame_6_button.grid(row=11, column=0, sticky="ew")
 
         self.frame_7_button=ctk.CTkButton(
             self.navigation_frame, corner_radius=0, height=50, border_spacing=10,
@@ -371,7 +367,6 @@ class MainApp(ctk.CTk):
 
         # Reopen the login window
         create_login_window()
-
 
 # ------------HOME FRAME----------------------#
 
@@ -571,7 +566,6 @@ def create_home_frame(home):
     #update_visitors_income_report(home, ax, canvas)
     #canvas.draw()
 
-
 # Graph
 def update_income_report(root, ax, canvas):
     # pass
@@ -624,7 +618,6 @@ def update_income_report(root, ax, canvas):
     # Schedule the next update
     root.after(1000, update_income_report, root, ax, canvas)
 
-
 def update_visitors_income_report(root, ax, canvas):
     # pass
     current_month=datetime.now().strftime('%Y-%m')
@@ -675,7 +668,6 @@ def update_visitors_income_report(root, ax, canvas):
 
     # Schedule the next update
     root.after(1000, update_visitors_income_report, root, ax, canvas)
-
 
 # ------------FRAME_2----------------------#
 
@@ -730,7 +722,6 @@ def create_gym_membership_frame(frame_2):
         text_color=("gray10", "gray90"),
     )
     view_member_button.place(x=600, y=150)
-
 
 class RegistrationFrame(ctk.CTkFrame):
     def __init__(self, master, data=None, **kwargs):
@@ -877,24 +868,27 @@ class RegistrationFrame(ctk.CTkFrame):
         subscription_plan_label=ctk.CTkLabel(subscription_frame, text="Lloji i anetaresimit:", font=label_font)
         subscription_plan_label.grid(row=2, column=0, padx=20, pady=10, sticky="w")
 
-        subscription_plan_options=["Javor", "Mujor", "Vjetor"]
+        subscription_plan_options=[ "Mujor", "Vjetor"]
         self.subscription_plan_entry=ctk.CTkComboBox(subscription_frame, values=subscription_plan_options)
-
-        # Set "Monthly" as the default value
-        self.subscription_plan_entry.set("Mujor")
-
         self.subscription_plan_entry.grid(row=2, column=1, padx=20, pady=15)
 
+        # Add a label and number input for duration
+        duration_label = ctk.CTkLabel(subscription_frame, text="Kohezgjatja:", font=label_font)
+        duration_label.grid(row=3, column=0, padx=20, pady=10, sticky="w")
+        self.duration_entry = ctk.CTkEntry(subscription_frame, placeholder_text="Numri i muajve/viteve")
+        self.duration_entry.grid(row=3, column=1, padx=20, pady=10)
+        
         # Bind the function to the <<ComboboxSelected>> event
-        self.subscription_plan_entry.bind("<<ComboboxSelected>>", self.update_dates_on_subscription_change)
+        #self.subscription_plan_entry.bind("<<ComboboxSelected>>", self.update_dates_on_subscription_change)
+        self.duration_entry.bind("<KeyRelease>", self.update_dates_on_subscription_change)
 
         # Button to trigger photo upload
         upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
-        upload_button.grid(row=3, column=0, padx=20, pady=10, sticky="w")
+        upload_button.grid(row=4, column=0, padx=20, pady=10, sticky="w")
 
         # Uploaded photo entry
         self.uploaded_photo_entry=ctk.CTkEntry(subscription_frame, placeholder_text=".png/.jpg/etj")
-        self.uploaded_photo_entry.grid(row=3, column=1, padx=20, pady=10)
+        self.uploaded_photo_entry.grid(row=4, column=1, padx=20, pady=10)
 
         # Reference to the user who owns the subscription
         #user_reference_label=ctk.CTkLabel(subscription_frame, text="User Reference:", font=label_font)
@@ -923,6 +917,7 @@ class RegistrationFrame(ctk.CTkFrame):
         #self.address_entry=address_entry
         #self.nationality_combo=nationality_combo
         self.contact_no_entry=contact_no_entry
+        self.duration_entry=self.duration_entry
         #self.email_entry=email_entry
         #self.emergency_contact_entry=emergency_contact_entry
         self.subscription_id_entry=self.subscription_id_entry
@@ -1014,21 +1009,23 @@ class RegistrationFrame(ctk.CTkFrame):
 
     def update_dates_on_subscription_change(self, event):
         subscription_plan=self.subscription_plan_entry.get()
+        subscription_amount=int(self.duration_entry.get())
 
         # Calculate start and end dates based on the selected subscription plan
-        current_date=datetime.now()
+        current_date = datetime.now()
+        start_date = current_date
 
         if subscription_plan == "Javor":
-            start_date=current_date
             end_date=start_date + timedelta(days=7)
         elif subscription_plan == "Mujor":
-            start_date=current_date
-            end_date=start_date + timedelta(weeks=4)
+            end_date=start_date + timedelta(weeks=(4 * subscription_amount)) 
         elif subscription_plan == "Vjetor":
-            start_date=current_date
-            end_date=start_date + timedelta(weeks=52)
+            end_date=start_date + timedelta(weeks=(52 * subscription_amount)) 
         else:
             return  # Do nothing for invalid plans
+        
+        print(f"Start date: {start_date.strftime('%Y-%m-%d')}")
+        print(f"End date: {end_date.strftime('%Y-%m-%d')}")
 
         # Update the DateEntry widgets
         self.start_timestamp_entry.set_date(start_date.strftime('%Y-%m-%d'))
@@ -1102,11 +1099,12 @@ class RegistrationFrame(ctk.CTkFrame):
         #emergency_contact_no=self.emergency_contact_entry.get()
         subscription_id=self.set_subscription_id()
         subscription_plan=self.subscription_plan_entry.get()
+        duration_plan = self.duration_entry.get()
         #user_reference=self.user_reference_entry.get()
 
         # Validate the data
         if not (first_name and last_name and age and sex and
-               contact_no and
+               contact_no and duration_plan and
                 subscription_plan):
             messagebox.showerror("Validation Error", "All fields are required.")
             return
@@ -1132,19 +1130,20 @@ class RegistrationFrame(ctk.CTkFrame):
         conn=sqlite3.connect('SQLite db/registration_form.db')
         cursor=conn.cursor()
 
-        # Calculate the expiration date based on the subscription plan
         if subscription_plan == "Javor":
-            duration=timedelta(days=7)
+            duration = timedelta(days=7)
         elif subscription_plan == "Mujor":
-            duration=timedelta(weeks=4)  # Assuming 4 weeks in a month for simplicity
+            duration = timedelta(weeks=(4 * int(duration_plan))) 
         elif subscription_plan == "Vjetor":
-            duration=timedelta(weeks=52)  # Assuming 52 weeks in a year for simplicity
+            duration = timedelta(weeks=(52 * int(duration_plan))) 
         else:
-            messagebox.showerror("Validation Error", "Invalid subscription plan.")
-            return
-
+            return  # Do nothing for invalid plans
+        
         start_date=datetime.now()
         end_date=start_date + duration
+        
+        print(f"Start date: {start_date.strftime('%Y-%m-%d')}")
+        print(f"End date: {end_date.strftime('%Y-%m-%d')}")
 
         # Format the date to include only the date part
         start_date_str=start_date.strftime('%Y-%m-%d')
@@ -1208,11 +1207,9 @@ class RegistrationFrame(ctk.CTkFrame):
     def back_button_event(self):
         self.destroy()
 
-
 def back_button_event(self):
     # Switch back to the previous frame (e.g., the gym membership frame)
     self.destroy()
-
 
 class ViewFrame(ctk.CTkFrame):
 
@@ -1277,6 +1274,9 @@ class ViewFrame(ctk.CTkFrame):
                         relief="groove")
         style.map("Treeview.Heading",
                   background=[('active', '#3484F0')])
+        
+        # Define a tag for expired status
+        style.configure("Expired.TLabel", background="#631111", foreground="white")
 
         # Create a table to display the records
         self.table=ttk.Treeview(table_frame, columns=(
@@ -1334,9 +1334,13 @@ class ViewFrame(ctk.CTkFrame):
             self.table.column(col, width=width)
             self.table.column("#0", width=0)
 
-        # Add the records to the table
+        # Add the records to the table and apply the tag for expired status
         for record in records:
-            self.table.insert("", tk.END, values=record)
+            tags = ("expired",) if record[7].lower() == "expired" else ()
+            self.table.insert("", tk.END, values=record, tags=tags)
+            
+        # Apply the tag configuration
+        self.table.tag_configure('expired', background='#631111', foreground='white')
 
         # create a frame to hold sub-frames
         button_frames=ctk.CTkFrame(self)
@@ -1423,7 +1427,6 @@ class ViewFrame(ctk.CTkFrame):
         else:
             # If the instance exists, bring it to the front
             self.edit_form.lift()
-
 
 class EditForm(ctk.CTkToplevel):
     def __init__(self, master, first_name, id_value, table_reference):
@@ -1772,7 +1775,6 @@ class EditForm(ctk.CTkToplevel):
 
                     self.destroy()
 
-
 class RenewSubscriptionFrame(ctk.CTkToplevel):
     def __init__(self, master, id_value, table_reference):
         super().__init__(master)
@@ -1957,7 +1959,6 @@ class RenewSubscriptionFrame(ctk.CTkToplevel):
                 print("STATUS CODE", response.status_code)
         except Exception as e:
             print("failed to send message", e)
-
 
 # ------------- FRAME 3 -----------------------#
 
@@ -4456,7 +4457,7 @@ class LogbookFrame(ctk.CTkFrame):
 
         # Store the Entry fields and other widgets as instance attributes
         self.first_name_entry=first_name_entry
-        self.middle_name_entry=middle_name_entry
+        #self.middle_name_entry=middle_name_entry
         self.last_name_entry=last_name_entry
         self.contact_no_entry=contact_no_entry
 
@@ -5192,7 +5193,7 @@ class ViewEmployeeFrame(ctk.CTkFrame):
 
         # Create a table to display the records
         self.table=ttk.Treeview(table_frame, columns=(
-            "ID", "First Name", "Last Name", "Age", "Sex", "Contact No", "Status"), show="headings",
+            "ID", "Emri", "Mbiemri", "Mosha", "Gjinia", "Numri i kontaktit", "Status"), show="headings",
                                 height=8)
         self.table.pack(side=tk.LEFT)
 
@@ -5203,22 +5204,22 @@ class ViewEmployeeFrame(ctk.CTkFrame):
 
         # Configure the columns
         self.table.heading("ID", text="ID")
-        self.table.heading("First Name", text="First Name")
+        self.table.heading("Emri", text="Emri")
         #self.table.heading("Middle Name", text="Middle Name")
-        self.table.heading("Last Name", text="Last Name")
-        self.table.heading("Age", text="Age")
-        self.table.heading("Sex", text="Sex")
-        self.table.heading("Contact No", text="Contact No")
+        self.table.heading("Mbiemri", text="Mbiemri")
+        self.table.heading("Mosha", text="Mosha")
+        self.table.heading("Gjinia", text="Gjinia")
+        self.table.heading("Numri i kontaktit", text="Numri i kontaktit")
         self.table.heading("Status", text="Status")
 
         # Define the column headings and their alignment
         columns=[
             ("ID", "center"),
-            ("First Name", "center"),
-            ("Last Name", "center"),
-            ("Age", "center"),
-            ("Sex", "center"),
-            ("Contact No", "center"),
+            ("Emri", "center"),
+            ("Mbiemri", "center"),
+            ("Mosha", "center"),
+            ("Gjinia", "center"),
+            ("Numri i kontaktit", "center"),
             ("Status", "center")
         ]
 
@@ -5231,11 +5232,11 @@ class ViewEmployeeFrame(ctk.CTkFrame):
         # column width
         columns=[
             ("ID", "50"),
-            ("First Name", "200"),
-            ("Last Name", "200"),
-            ("Age", "50"),
-            ("Sex", "100"),
-            ("Contact No", "200"),
+            ("Emri", "200"),
+            ("Mbiemri", "200"),
+            ("Mosha", "50"),
+            ("Gjinia", "100"),
+            ("Numri i kontaktit", "200"),
             ("Status", "200")
         ]
 
