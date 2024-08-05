@@ -521,32 +521,32 @@ def create_home_frame(home):
     get_gym_equipment_count()
 
     # -------------------FRAME 1 ----------------------#
-    #graph_frame=ctk.CTkFrame(dashboard_frame)
-    #graph_frame.pack(pady=5, padx=10, fill="both", expand=True)
+    graph_frame=ctk.CTkFrame(dashboard_frame)
+    graph_frame.pack(pady=5, padx=10, fill="both", expand=True)
 
     # Monthly Income Report Graph
-    #income_frame=ctk.CTkFrame(graph_frame)
-    #income_frame.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
+    income_frame=ctk.CTkFrame(graph_frame)
+    income_frame.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
     # Create a small rectangular label for the income report
-    #income_label=ctk.CTkLabel(income_frame, text="Te ardhurat mujore nga anetarsimi (ALL)", font=("Arial bold", 16))
-    #income_label.pack(pady=5, padx=10, anchor="w")
+    income_label=ctk.CTkLabel(income_frame, text="Te ardhurat mujore nga anetarsimi (ALL)", font=("Arial bold", 16))
+    income_label.pack(pady=5, padx=10, anchor="w")
 
     # Create a figure and axis for the income report graph
-    #fig, ax=plt.subplots(figsize=(7, 4), dpi=100)
-    #canvas=FigureCanvasTkAgg(fig, master=income_frame)
-    #canvas_widget=canvas.get_tk_widget()
-    #canvas_widget.pack(fill="both", expand=True)
+    fig, ax=plt.subplots(figsize=(7, 4), dpi=100)
+    canvas=FigureCanvasTkAgg(fig, master=income_frame)
+    canvas_widget=canvas.get_tk_widget()
+    canvas_widget.pack(fill="both", expand=True)
 
     # Update the income report graph
-    #update_income_report(home, ax, canvas)
-    #canvas.draw()
+    update_income_report(home, ax, canvas)
+    canvas.draw()
 
     # Make the rows and columns resizable
-    #for i in range(5):
-    #    panel_frame.grid_columnconfigure(i, weight=1)
+    for i in range(5):
+        panel_frame.grid_columnconfigure(i, weight=1)
 
-    #panel_frame.grid_rowconfigure(0, weight=1)
+    panel_frame.grid_rowconfigure(0, weight=1)
 
     # ------------FRAME 2----------------------#
     #graph_frame2=ctk.CTkFrame(graph_frame)
@@ -568,34 +568,33 @@ def create_home_frame(home):
 
 # Graph
 def update_income_report(root, ax, canvas):
-    # pass
-    current_month=datetime.now().strftime('%Y-%m')
+    current_month = datetime.now().strftime('%Y-%m')
 
     # Connect to the members database
-    conn_members=sqlite3.connect('SQLite db/registration_form.db')
-    cursor_members=conn_members.cursor()
+    conn_members = sqlite3.connect('SQLite db/registration_form.db')
+    cursor_members = conn_members.cursor()
 
-    # Retrieve monthly member count
-    cursor_members.execute("SELECT strftime('%Y-%m', start_date) as month, COUNT(*) FROM registration GROUP BY month")
-    members_data=cursor_members.fetchall()
+    # Retrieve monthly payment data
+    cursor_members.execute("SELECT strftime('%Y-%m', start_date) as month, SUM(payment) FROM registration GROUP BY month")
+    payment_data = cursor_members.fetchall()
 
     conn_members.close()
 
-    # Process member data
-    merged_data={}
-    for month, members_count in members_data:
-        merged_data[month]={'members': members_count * 700}
+    # Process payment data
+    merged_data = {}
+    for month, total_payment in payment_data:
+        merged_data[month] = {'payment': total_payment}
 
-    # Extract month labels and total member incomes
-    months, member_incomes=zip(
-        *[(month, data['members']) for month, data in merged_data.items()])
+    # Extract month labels and total payments
+    months, payments = zip(
+        *[(month, data['payment']) for month, data in merged_data.items()])
 
-    # Convert months to a NumPy array with a specific data type (e.g., float)
-    months_array=np.array(months, dtype=str)
+    # Convert months to a NumPy array with a specific data type (e.g., str)
+    months_array = np.array(months, dtype=str)
 
     # Plot the monthly income report with inverted colors
     ax.clear()
-    members_bar=ax.bar(months_array, member_incomes, color='green', alpha=0.7, label='Anetaret')
+    payment_bar = ax.bar(months_array, payments, color='green', alpha=0.7, label='Total Payments')
     ax.set_ylabel('Te ardhurat (ALL)')
 
     # Update the title based on the current month
@@ -605,10 +604,10 @@ def update_income_report(root, ax, canvas):
     # Show legend
     ax.legend()
 
-    # Annotate each bar with the total income value
-    for bar, members_income in zip(members_bar, member_incomes):
-        ax.text(bar.get_x() + bar.get_width() / 2, members_income,
-                f'{members_income} All', ha='center', va='bottom', color='black', fontweight='bold')
+    # Annotate each bar with the total payment value
+    for bar, total_payment in zip(payment_bar, payments):
+        ax.text(bar.get_x() + bar.get_width() / 2, total_payment,
+                f'{total_payment} ALL', ha='center', va='bottom', color='black', fontweight='bold')
 
     ax.grid(True)
 
@@ -617,7 +616,7 @@ def update_income_report(root, ax, canvas):
 
     # Schedule the next update
     root.after(1000, update_income_report, root, ax, canvas)
-
+    
 def update_visitors_income_report(root, ax, canvas):
     # pass
     current_month=datetime.now().strftime('%Y-%m')
@@ -883,12 +882,18 @@ class RegistrationFrame(ctk.CTkFrame):
         self.duration_entry.bind("<KeyRelease>", self.update_dates_on_subscription_change)
 
         # Button to trigger photo upload
-        upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
-        upload_button.grid(row=4, column=0, padx=20, pady=10, sticky="w")
-
+        #upload_button=ctk.CTkButton(subscription_frame, text="Foto", command=self.upload_photo)
+        #upload_button.grid(row=4, column=0, padx=20, pady=10, sticky="w")
+        
         # Uploaded photo entry
-        self.uploaded_photo_entry=ctk.CTkEntry(subscription_frame, placeholder_text=".png/.jpg/etj")
-        self.uploaded_photo_entry.grid(row=4, column=1, padx=20, pady=10)
+        #self.uploaded_photo_entry=ctk.CTkEntry(subscription_frame, placeholder_text=".png/.jpg/etj")
+        #self.uploaded_photo_entry.grid(row=4, column=1, padx=20, pady=10)
+
+        #Pagesa e anetarit
+        paymemt_label = ctk.CTkLabel(subscription_frame, text="Pagesa:", font=label_font)
+        paymemt_label.grid(row=4, column=0, padx=20, pady=10, sticky="w")
+        self.payment_entry = ctk.CTkEntry(subscription_frame, placeholder_text="Shuma e paguar")
+        self.payment_entry.grid(row=4, column=1, padx=20, pady=10)
 
         # Reference to the user who owns the subscription
         #user_reference_label=ctk.CTkLabel(subscription_frame, text="User Reference:", font=label_font)
@@ -918,6 +923,7 @@ class RegistrationFrame(ctk.CTkFrame):
         #self.nationality_combo=nationality_combo
         self.contact_no_entry=contact_no_entry
         self.duration_entry=self.duration_entry
+        self.payment_entry=self.payment_entry
         #self.email_entry=email_entry
         #self.emergency_contact_entry=emergency_contact_entry
         self.subscription_id_entry=self.subscription_id_entry
@@ -942,7 +948,8 @@ class RegistrationFrame(ctk.CTkFrame):
                        start_date DATE,
                        end_date DATE,
                        status TEXT DEFAULT 'Ongoing',
-                       photo_data BLOB
+                       photo_data BLOB,
+                       payment INTEGER
                    )
                ''')
 
@@ -1091,6 +1098,7 @@ class RegistrationFrame(ctk.CTkFrame):
         last_name=self.last_name_entry.get()
         age=self.age_entry.get()
         sex=self.sex_entry.get()
+        payment = self.payment_entry.get()
         #birth_date=self.birth_date_entry.get()
         #address=self.address_entry.get()
         #nationality=self.nationality_combo.get()
@@ -1105,7 +1113,7 @@ class RegistrationFrame(ctk.CTkFrame):
         # Validate the data
         if not (first_name and last_name and age and sex and
                contact_no and duration_plan and
-                subscription_plan):
+                subscription_plan and payment):
             messagebox.showerror("Validation Error", "All fields are required.")
             return
 
@@ -1119,7 +1127,7 @@ class RegistrationFrame(ctk.CTkFrame):
         if len(contact_no) != 10:
             messagebox.showerror("Validation Error", "Contact No must be an 10-digit number.")
             return
-
+        
         # Calculate the age based on the provided birthdate
         #birth_date_obj=datetime.strptime(birth_date, '%Y-%m-%d')
         #current_date=datetime.now()
@@ -1159,10 +1167,10 @@ class RegistrationFrame(ctk.CTkFrame):
         # Insert the data into the database
         cursor.execute('''
            INSERT INTO registration (first_name, last_name, age, sex, contact_no,  subscription_id,
-                                   subscription_plan, start_date, end_date, photo_data)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                   subscription_plan, start_date, end_date, photo_data, payment)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (first_name,last_name, age, sex, contact_no,
-              subscription_id, subscription_plan, start_date_str, end_date_str, sqlite3.Binary(photo_data)))
+              subscription_id, subscription_plan, start_date_str, end_date_str, sqlite3.Binary(photo_data), payment))
 
         # Commit the changes and close the database connection
         conn.commit()
@@ -1468,7 +1476,7 @@ class EditForm(ctk.CTkToplevel):
         main_frame.pack(fill="both", expand=True)
 
         # Display the photo stored as BLOB data
-        photo_blob=self.member_data[-1]  # Assuming the photo is stored in the last column
+        photo_blob=self.member_data[-2]  # Assuming the photo is stored in the last column
         photo=Image.open(io.BytesIO(photo_blob))
         photo=photo.resize((150, 150), Image.LANCZOS)
         photo=ImageTk.PhotoImage(photo)
