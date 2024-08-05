@@ -1,8 +1,10 @@
 import sys
 from cx_Freeze import setup, Executable
 
-# For .exe file conversion
+# Increase the recursion limit
+sys.setrecursionlimit(5000)
 
+# For .exe file conversion
 build_exe_options = {
     "packages": [
         "customtkinter",
@@ -19,7 +21,7 @@ build_exe_options = {
         "tkcalendar",
         "tkinter"
     ],
-    # Add any additional packages your script depends on
+    "includes": ["tkinter", "tkcalendar"],
     "include_files": [
         ("SQLite db", "SQLite db"),
         ("templates", "templates"),
@@ -32,12 +34,15 @@ base = None
 if sys.platform == "win32":
     base = "Win32GUI"  # Use this option if you want to hide the console window
 
-executables = [Executable("gym.py", base=base)]
+# Path to your icon file
+icon_path = "logo.ico"
+
+executables = [Executable("gym.py", base=base, icon=icon_path)]
 
 setup(
-    name="D'Grit Gym",
-    version="0.1",
-    description="Capstone Project",
+    name="Palestrafy",
+    version="1.1",
+    description="Management Software",
     options={"build_exe": build_exe_options},
     executables=executables,
 )

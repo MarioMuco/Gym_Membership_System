@@ -1,7 +1,4 @@
-convert.exe
-logoja e appit
 Krijo adrese - fshije ne production
 
 
 dashboard fix style
-abonim disa mujor  shumezo me vleren e marr
